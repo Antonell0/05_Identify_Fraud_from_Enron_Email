@@ -13,7 +13,7 @@ def outlierCleaner(predictions, ages, net_worths):
     
     cleaned_data = []
 
-    ### your code goes here
+    # your code goes here
 
     
     return cleaned_data
