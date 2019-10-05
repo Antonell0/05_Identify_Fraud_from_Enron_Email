@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 """
     Starter code for the regression mini-project.
@@ -17,7 +17,8 @@ import sys
 import pickle
 sys.path.append("../tools/")
 from feature_format import featureFormat, targetFeatureSplit
-dictionary = pickle.load( open("../final_project/final_project_dataset_modified.pkl", "r") )
+
+dictionary = pickle.load(open("../final_project/final_project_dataset_modified.pkl", "r"))
 
 ### list the features you want to look at--first item in the 
 ### list will be the "target" feature

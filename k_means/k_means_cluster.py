@@ -1,4 +1,4 @@
-#!/usr/bin/python 
+#!/usr/bin/env python3
 
 """ 
     Skeleton code for k-means clustering mini-project.
