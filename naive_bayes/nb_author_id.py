@@ -22,7 +22,11 @@ labels_train and labels_test are the corresponding item labels"""
 features_train, features_test, labels_train, labels_test = preprocess()
 
 
-
+from sklearn.naive_bayes import GaussianNB
+clf = GaussianNB()
+clf.fit(features_train, labels_train)
+labels_pred = clf.predict(features_test)
+clf.score(features_test, labels_test)
 
 # your code goes here
 

@@ -32,7 +32,11 @@ visualization code (prettyPicture) to show you the decision boundary"""
 from sklearn.naive_bayes import GaussianNB
 clf = GaussianNB()
 clf.fit(features_train,labels_train)
-pred = clf.predict(features_test)
+labels_pred = clf.predict(features_test)
+
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(labels_test, labels_pred, normalize=True, sample_weight=None)
+print(accuracy)
 
 try:
     prettyPicture(clf, features_test, labels_test, "GaussianNB.png")
