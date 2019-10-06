@@ -5,9 +5,12 @@ import matplotlib.pyplot as plt
 import base64
 import json
 
-def prettyPicture(clf, x_test, y_test):
-    x_min = 0.0; x_max = 1.0
-    y_min = 0.0; y_max = 1.0
+
+def prettyPicture(clf, x_test, y_test, fig_name="test.png"):
+    x_min = 0.0
+    x_max = 1.0
+    y_min = 0.0
+    y_max = 1.0
     
     # Plot the decision boundary. For that, we will assign a color to each
     # point in the mesh [x_min, m_max]x[y_min, y_max].
@@ -33,8 +36,9 @@ def prettyPicture(clf, x_test, y_test):
     plt.legend()
     plt.xlabel("bumpiness")
     plt.ylabel("grade")
+    plt.show()
+    plt.savefig(fig_name)
 
-    plt.savefig("test.png")
 
 def output_image(name, format, bytes):
 
