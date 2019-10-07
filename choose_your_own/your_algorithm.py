@@ -29,14 +29,32 @@ plt.show()
 """ your code here!  name your classifier object clf if you want the 
 visualization code (prettyPicture) to show you the decision boundary"""
 
-from sklearn.naive_bayes import GaussianNB
-clf = GaussianNB()
-clf.fit(features_train,labels_train)
-labels_pred = clf.predict(features_test)
+algorithm = "SVM" #"GaussianNB"
 
-from sklearn.metrics import accuracy_score
-accuracy = accuracy_score(labels_test, labels_pred, normalize=True, sample_weight=None)
-print(accuracy)
+if algorithm == "GaussianNB":
+    from sklearn.naive_bayes import GaussianNB
+    clf = GaussianNB()
+    clf.fit(features_train, labels_train)
+    labels_pred = clf.predict(features_test)
+
+    from sklearn.metrics import accuracy_score
+    accuracy = accuracy_score(labels_test, labels_pred, normalize=True, sample_weight=None)
+    print(accuracy)
+
+if algorithm == "SVM":
+    from sklearn.svm import SVC
+    clf = SVC(kernel="linear")
+    clf.fit(features_train, labels_train)
+    SVC(C=1.0, cache_size=200, class_weight=None, coef0=0.0,
+        decision_function_shape='ovr', degree=3, gamma='auto', kernel='linear',
+        max_iter=-1, probability=False, random_state=None, shrinking=True,
+        tol=0.001, verbose=False)
+
+    labels_pred = clf.predict(features_test)
+
+    from sklearn.metrics import accuracy_score
+    accuracy = accuracy_score(labels_test, labels_pred, normalize=True, sample_weight=None)
+    print(accuracy)
 
 try:
     prettyPicture(clf, features_test, labels_test, "GaussianNB.png")
