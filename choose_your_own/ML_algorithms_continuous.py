@@ -11,6 +11,11 @@ def main():
     ages_train, ages_test, net_worths_train, net_worths_test = ageNetWorthData()
 
     reg = studentReg(ages_train, net_worths_train)
+    print("slope: %f" % reg.coef_)
+    print("intercept: %f" % reg.intercept_)
+
+    print("Statistics on the training dataset (r-squared score): %f" % reg.score(ages_train, net_worths_train))
+    print("Statistics on the testing dataset (r-squared score): %f" % reg.score(ages_test, net_worths_test))
 
     plt.clf()
     plt.scatter(ages_train, net_worths_train, color="b", label="train data")
@@ -22,7 +27,7 @@ def main():
 
 
     plt.savefig("regression.png")
-    output_image("regression.png", "png", open("regression.png", "rb").read())
+ #   output_image("regression.png", "png", open("regression.png", "rb").read())
 
 
 def studentReg(ages_train, net_worths_train):
@@ -41,10 +46,10 @@ def ageNetWorthData():
 
     random.seed(42)
     n_points = 200
-    ages = [random.randrange(0,65) for _ in range(0, n_points)]
-    error = [random.randrange(-100,100)/100 for _ in range(0, n_points)]
-    net_worths = [round(6.25*ages[ii]*(1+error[ii])) for ii in range(0, n_points)]
-
+    x = [random.randrange(0,65) for _ in range(0, n_points)]
+    error = [random.randrange(-100,100)/1000 for _ in range(0, n_points)]
+    net_worths = [[round(6.25*x[ii]*(1+error[ii]))] for ii in range(0, n_points)]
+    ages = [[age] for age in x]
     # split into train/test sets
     split = int(0.75 * n_points)
     ages_train = ages[0:split]
