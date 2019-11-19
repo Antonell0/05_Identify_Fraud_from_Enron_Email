@@ -43,13 +43,12 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
         # only look at first 200 emails when developing
         # once everything is working, remove this line to run over full dataset
         temp_counter += 1
-        if temp_counter < 20:
+        if temp_counter < 200:
             path = os.path.join('..', path[:-1])
-            print(path)
-            email = open(path, "r")
 
             # use parseOutText to extract the text from the opened email
-            text = parseOutText(email)
+            with open(path, 'r') as email:
+                text = parseOutText(email)
 
             # use str.replace() to remove any instances of the words
             # ["sara", "shackleton", "chris", "germani"]
