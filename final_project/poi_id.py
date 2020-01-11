@@ -10,18 +10,34 @@ from tester import dump_classifier_and_data
 """Task 1: Select what features you'll use.
 features_list is a list of strings, each of which is a feature name.
 The first feature must be "poi"."""
-features_list = ['poi', 'salary']  # You will need to use more features
+
+features_list = ['poi', 'salary', 'total_payments', 'from_poi_to_this_person', 'from_this_person_to_poi']  # You will need to use more features
+
+financial_features= ['salary', 'deferral_payments', 'total_payments', 'loan_advances', 'bonus',
+                     'restricted_stock_deferred', 'deferred_income', 'total_stock_value', 'expenses',
+                     'exercised_stock_options', 'other', 'long_term_incentive', 'restricted_stock', 'director_fees']
+
+email_features= ['to_messages', 'email_address', 'from_poi_to_this_person', 'from_messages', 'from_this_person_to_poi',
+                 'shared_receipt_with_poi']
+
+POI_label= ['poi']
 
 # Load the dictionary containing the dataset
-with open("final_project_dataset.pkl", "r") as data_file:
-    data_dict = pickle.load(data_file)
+dataset = "final_project_dataset.pkl"
+with open(dataset, 'rb') as file:
+    data_dict = pickle.load(file)
+
+print("The number of people contained in the dataset is: ", len(data_dict.keys()))
+print("The number of features for each person is: ", len(data_dict['METTS MARK'].keys()))
 
 """Task 2: Remove outliers
 
-
+features_list
 
 Task 3: Create new feature(s)
 Store to my_dataset for easy export below."""
+
+"""Idea interaction with POI. Check how often mails from this persons are sent/received to POI"""
 my_dataset = data_dict
 
 # Extract features and labels from dataset for local testing
