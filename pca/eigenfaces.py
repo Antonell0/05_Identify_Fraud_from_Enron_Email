@@ -21,12 +21,11 @@ import logging
 import pylab as pl
 import numpy as np
 
-from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.datasets import fetch_lfw_people
-from sklearn.grid_search import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
-from sklearn.decomposition import RandomizedPCA
+from sklearn.decomposition import PCA
 from sklearn.svm import SVC
 
 # Display progress logs on stdout
@@ -60,11 +59,11 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random
 
 # Compute a PCA (eigenfaces) on the face dataset (treated as unlabeled
 # dataset): unsupervised feature extraction / dimensionality reduction
-n_components = 150
+n_components = 300
 
 print("Extracting the top %d eigenfaces from %d faces" % (n_components, x_train.shape[0]))
 t0 = time()
-pca = RandomizedPCA(n_components=n_components, whiten=True).fit(x_train)
+pca = PCA(n_components=n_components, whiten=True).fit(x_train)
 print("done in %0.3fs" % (time() - t0))
 
 eigenfaces = pca.components_.reshape((n_components, h, w))

@@ -52,11 +52,12 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
 
         # use str.replace() to remove any instances of the words
         # ["sara", "shackleton", "chris", "germani"]
-        text.replace("sara", "")
-        text.replace("shackleton", "")
-        text.replace("chris", "")
-        text.replace("germani", "")
-
+        text = text.replace("sara", "")
+        text = text.replace("shackleton", "")
+        text = text.replace("chris", "")
+        text = text.replace("germani", "")
+        text = text.replace("sshacklensf", "")
+        text = text.replace("cgermannsf", "")
         # text.translate(str.maketrans({"sara":None, "shakleton":None, "chris":None, "germani":None}))
 
         # append the text to word_data
@@ -74,6 +75,9 @@ from_sara.close()
 from_chris.close()
 #print(word_data)
 
+
+# in Part 4, do TfIdf vectorization here
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 vectorizer = TfidfVectorizer(stop_words='english')
 X = vectorizer.fit_transform(word_data)
@@ -83,8 +87,3 @@ with open('your_word_data.pkl', 'wb') as f:
     pickle.dump(word_data, f)
 with open('your_email_authors.pkl', 'wb') as f:
     pickle.dump(from_data, f)
-
-
-
-# in Part 4, do TfIdf vectorization here
-
