@@ -6,12 +6,13 @@ sys.path.append("../tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
 from tester import dump_classifier_and_data
+import pandas as pd
 
 """Task 1: Select what features you'll use.
 features_list is a list of strings, each of which is a feature name.
 The first feature must be "poi"."""
 
-features_list = ['poi', 'salary', 'total_payments', 'from_poi_to_this_person', 'from_this_person_to_poi']  # You will need to use more features
+features_list = ['poi', 'salary', 'total_payments']  # You will need to use more features
 
 financial_features= ['salary', 'deferral_payments', 'total_payments', 'loan_advances', 'bonus',
                      'restricted_stock_deferred', 'deferred_income', 'total_stock_value', 'expenses',
@@ -30,7 +31,27 @@ with open(dataset, 'rb') as file:
 print("The number of people contained in the dataset is: ", len(data_dict.keys()))
 print("The number of features for each person is: ", len(data_dict['METTS MARK'].keys()))
 
+df = pd.DataFrame.from_dict(data_dict, orient = 'index')
+df[['salary']] = df[['salary']].apply(pd.to_numeric)
+df[['deferral_payments']] = df[['deferral_payments']].apply(pd.to_numeric, errors='coerce')
+df[['total_payments']] = df[['total_payments']].apply(pd.to_numeric, errors='coerce')
+
+
+df.describe()
+df.info()
+
+ax1 = df.plot.scatter(x='salary',y='total_payments',c='deferral_payments')
+
+missing_data = []
+for key_name in features_list:
+    for person_name in data_dict.keys():
+        if data_dict[person_name][key_name] == "NaN":
+            missing_data.append(person_name + "_" + key_name)
+
+print(missing_data)
 """Task 2: Remove outliers
+
+
 
 features_list
 
