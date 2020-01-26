@@ -8,12 +8,6 @@ from feature_format import featureFormat, targetFeatureSplit
 from tester import dump_classifier_and_data
 import pandas as pd
 
-"""Task 1: Select what features you'll use.
-features_list is a list of strings, each of which is a feature name.
-The first feature must be "poi"."""
-
-features_list = ['poi', 'salary', 'total_payments']  # You will need to use more features
-
 financial_features= ['salary', 'deferral_payments', 'total_payments', 'loan_advances', 'bonus',
                      'restricted_stock_deferred', 'deferred_income', 'total_stock_value', 'expenses',
                      'exercised_stock_options', 'other', 'long_term_incentive', 'restricted_stock', 'director_fees']
@@ -23,18 +17,42 @@ email_features= ['to_messages', 'email_address', 'from_poi_to_this_person', 'fro
 
 POI_label= ['poi']
 
+
+"""Used features
+features_list is a list of strings, each of which is a feature name.
+The first feature must be "poi"."""
+features_list = ['poi', 'salary', 'total_payments']  # You will need to use more features
+
+
 # Load the dictionary containing the dataset
 dataset = "final_project_dataset.pkl"
 with open(dataset, 'rb') as file:
     data_dict = pickle.load(file)
 
+#Initial exploration
 print("The number of people contained in the dataset is: ", len(data_dict.keys()))
 print("The number of features for each person is: ", len(data_dict['METTS MARK'].keys()))
+
+
+key_max = max(data_dict, key=lambda k: data_dict[k]['total_payments'] if isinstance(data_dict[k]['total_payments'],float) else float("-inf"))
+key_min = min(data_dict, key=lambda k: data_dict[k]['total_payments'] if isinstance(data_dict[k]['total_payments'],float) else float("+inf"))
+
+
+
+for feature in financial_features, email_features:
+    for person_name in data_dict.keys():
+
+
 
 df = pd.DataFrame.from_dict(data_dict, orient = 'index')
 df[['salary']] = df[['salary']].apply(pd.to_numeric)
 df[['deferral_payments']] = df[['deferral_payments']].apply(pd.to_numeric, errors='coerce')
 df[['total_payments']] = df[['total_payments']].apply(pd.to_numeric, errors='coerce')
+df[['restricted_stock_deferred']] = df[['restricted_stock_deferred']].apply(pd.to_numeric, errors='coerce')
+df[['exercised_stock_options']] = df[['exercised_stock_options']].apply(pd.to_numeric, errors='coerce')
+df[['long_term_incentive']] = df[['long_term_incentive']].apply(pd.to_numeric, errors='coerce')
+df[['bonus']] = df[['salary']].apply(pd.to_numeric, errors='coerce')
+df[['total_stock_value']] = df[['total_stock_value']].apply(pd.to_numeric, errors='coerce')
 
 
 df.describe()
@@ -49,6 +67,7 @@ for key_name in features_list:
             missing_data.append(person_name + "_" + key_name)
 
 print(missing_data)
+
 """Task 2: Remove outliers
 
 
