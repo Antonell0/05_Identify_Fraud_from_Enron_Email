@@ -34,10 +34,16 @@ print("The number of people contained in the dataset is: ", len(data_dict.keys()
 print("The number of features for each person is: ", len(data_dict['METTS MARK'].keys()))
 
 
-key_max = max(data_dict, key=lambda k: data_dict[k]['total_payments'] if isinstance(data_dict[k]['total_payments'],float) else float("-inf"))
-key_min = min(data_dict, key=lambda k: data_dict[k]['total_payments'] if isinstance(data_dict[k]['total_payments'],float) else float("+inf"))
+key_max = max(data_dict.keys(), key=lambda k: data_dict[k]['total_payments'] if isinstance(data_dict[k]['total_payments'],int) else float("-inf"))
+key_min = min(data_dict.keys(), key=lambda k: data_dict[k]['total_payments'] if isinstance(data_dict[k]['total_payments'],int) else float("+inf"))
 
+for financial_data in financial_features:
+    print(max(data_dict.keys(), key=lambda k: data_dict[k][financial_data] if isinstance(data_dict[k][financial_data],int)
+    else float("-inf")))
+    print(min(data_dict.keys(), key=lambda k: data_dict[k][financial_data] if isinstance(data_dict[k][financial_data],int)
+    else float("+inf")))
 
+del data_dict['TOTAL']
 
 for feature in financial_features, email_features:
     for person_name in data_dict.keys():
@@ -45,7 +51,7 @@ for feature in financial_features, email_features:
 
 
 df = pd.DataFrame.from_dict(data_dict, orient = 'index')
-df[['salary']] = df[['salary']].apply(pd.to_numeric)
+df[['salary']] = df[['salary']].apply(pd.to_numeric, errors='coerce')
 df[['deferral_payments']] = df[['deferral_payments']].apply(pd.to_numeric, errors='coerce')
 df[['total_payments']] = df[['total_payments']].apply(pd.to_numeric, errors='coerce')
 df[['restricted_stock_deferred']] = df[['restricted_stock_deferred']].apply(pd.to_numeric, errors='coerce')
