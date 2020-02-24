@@ -22,7 +22,8 @@ POI_label = ['poi']
 """Used features
 features_list is a list of strings, each of which is a feature name.
 The first feature must be "poi"."""
-features_list = ['poi', 'salary', 'total_payments', 'loan_advances', 'bonus']  # You will need to use more features
+features_list = POI_label + financial_features + ['to_messages', 'from_poi_to_this_person', 'from_messages', 'from_this_person_to_poi',
+                  'shared_receipt_with_poi'] #['poi', 'salary', 'total_payments', 'loan_advances', 'bonus']  # You will need to use more features
 
 # Load the dictionary containing the dataset
 dataset = "final_project_dataset.pkl"
@@ -33,12 +34,19 @@ with open(dataset, 'rb') as file:
 print("The number of people contained in the dataset is: ", len(data_dict.keys()))
 print("The number of features for each person is: ", len(data_dict['METTS MARK'].keys()))
 
+low_data_ppl = []
 for person in data_dict.keys():
     count = 0
     for feature in financial_features + email_features:
         if data_dict[person][feature] == "NaN":
             count += 1
+    if count > 13:
+        low_data_ppl.append(person)
     data_dict[person]["count"] = count
+
+for person in low_data_ppl:
+    print(data_dict[person]["poi"])
+    data_dict.pop(person)
 
 feature_NaN = {}
 for feature in financial_features + email_features:
@@ -64,10 +72,13 @@ for feature in financial_features + email_features + ["count"]:
 """Task 2: Remove outliers"""
 
 data_dict.pop("TOTAL", 0)
-data_dict.pop("LOCKHART EUGENE E", 0)
 
+features_list = ['poi', 'salary', 'total_payments', 'bonus', 'total_stock_value']
 data = featureFormat(data_dict, features_list)
 
+
+
+for feature in []
 poi = []
 salary = []
 bonus = []
