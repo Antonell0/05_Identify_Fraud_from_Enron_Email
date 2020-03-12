@@ -2,13 +2,15 @@
 
 import sys
 import pickle
+import numpy as np
+from sklearn.linear_model import SGDClassifier
+from time import time
 
 sys.path.append("../tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
 from tester import dump_classifier_and_data
 import matplotlib.pyplot
-
 
 financial_features = ['salary', 'deferral_payments', 'total_payments', 'loan_advances', 'bonus',
                       'restricted_stock_deferred', 'deferred_income', 'total_stock_value', 'expenses',
@@ -22,8 +24,9 @@ POI_label = ['poi']
 """Used features
 features_list is a list of strings, each of which is a feature name.
 The first feature must be "poi"."""
-features_list = POI_label + financial_features + ['to_messages', 'from_poi_to_this_person', 'from_messages', 'from_this_person_to_poi',
-                  'shared_receipt_with_poi'] #['poi', 'salary', 'total_payments', 'loan_advances', 'bonus']  # You will need to use more features
+features_list = POI_label + financial_features + ['to_messages', 'from_poi_to_this_person', 'from_messages',
+                                                  'from_this_person_to_poi',
+                                                  'shared_receipt_with_poi']  # ['poi', 'salary', 'total_payments', 'loan_advances', 'bonus']  # You will need to use more features
 
 # Load the dictionary containing the dataset
 dataset = "final_project_dataset.pkl"
@@ -56,13 +59,11 @@ for feature in financial_features + email_features:
             count += 1
     feature_NaN[feature] = count
 
-
-
 for feature in financial_features + email_features + ["count"]:
     key_max = max(data_dict.keys(), key=lambda k: data_dict[k][feature]
-                  if isinstance(data_dict[k][feature], int) else float("-inf"))
+    if isinstance(data_dict[k][feature], int) else float("-inf"))
     key_min = min(data_dict.keys(), key=lambda k: data_dict[k][feature]
-                  if isinstance(data_dict[k][feature], int) else float("+inf"))
+    if isinstance(data_dict[k][feature], int) else float("+inf"))
     max_value = data_dict[key_max][feature]
     min_value = data_dict[key_min][feature]
 
@@ -76,25 +77,23 @@ data_dict.pop("TOTAL", 0)
 features_list = ['poi', 'salary', 'total_payments', 'bonus', 'total_stock_value']
 data = featureFormat(data_dict, features_list)
 
-
-
-for feature in []
-poi = []
-salary = []
-bonus = []
-for point in data:
-    poi.append(point[0])
-    salary.append(point[1])
-    bonus.append(point[2])
-
-matplotlib.pyplot.scatter(salary, bonus, c=poi)
-matplotlib.pyplot.xlabel("salary")
-matplotlib.pyplot.ylabel("bonus")
-matplotlib.pyplot.show()
-
-
-
-
+# for feature in features_list:
+#     if feature is not 'poi':
+#         x_points = []
+#         y_points = []
+#
+# poi = []
+# salary = []
+# bonus = []
+# for point in data:
+#     poi.append(point[0])
+#     salary.append(point[1])
+#     bonus.append(point[2])
+#
+# matplotlib.pyplot.scatter(salary, bonus, c=poi)
+# matplotlib.pyplot.xlabel("salary")
+# matplotlib.pyplot.ylabel("bonus")
+# matplotlib.pyplot.show()
 
 
 """Task 3: Create new feature(s)
@@ -103,54 +102,102 @@ Store to my_dataset for easy export below."""
 """Idea interaction with POI. Check how often mails from this persons are sent/received to POI"""
 my_dataset = data_dict
 
+for person in my_dataset.keys():
+    if my_dataset[person]["from_messages"] != "NaN" and my_dataset[person]["to_messages"] != "NaN" and \
+            my_dataset[person]["from_this_person_to_poi"] != "NaN" and my_dataset[person][
+        "from_poi_to_this_person"] != "NaN":
+        my_dataset[person]["interaction_POI"] = \
+            100 * (my_dataset[person]["from_this_person_to_poi"] + my_dataset[person]["from_poi_to_this_person"]) / \
+            (my_dataset[person]["from_messages"] + my_dataset[person]["to_messages"])
+    else:
+        my_dataset[person]["interaction_POI"] = "NaN"
+
 # Extract features and labels from dataset for local testing
+features_list.append("interaction_POI")
 data = featureFormat(my_dataset, features_list, sort_keys=True)
 labels, features = targetFeatureSplit(data)
 
-"""Task 4: Try a varity of classifiers
+"""Task 4: Try a variety of classifiers
 Please name your classifier clf for easy export below.
 Note that if you want to do PCA or other multi-stage operations,
 you'll need to use Pipelines. For more info:
 http://scikit-learn.org/stable/modules/pipeline.html"""
 
-# Provided to give you a starting point. Try a variety of classifiers.
-from sklearn.naive_bayes import GaussianNB
+""" Test """
 
-clf = GaussianNB()
+from sklearn.pipeline import Pipeline
+from sklearn.decomposition import PCA
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import StratifiedShuffleSplit, GridSearchCV
+from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.tree import DecisionTreeClassifier
 
-"""Task 5: Tune your classifier to achieve better than .3 precision and recall 
-using our testing script. Check the tester.py script in the final project
-folder for details on the evaluation method, especially the test_classifier
-function. Because of the small size of the dataset, the script uses
-stratified shuffle split cross validation. For more info: 
-http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html"""
+features = np.array(features)
+labels = np.array(labels)
 
-# Example starting point. Try investigating other evaluation techniques!
-from sklearn.cross_validation import train_test_split
+sss = StratifiedShuffleSplit(n_splits=1, test_size=0.3)
+sss.get_n_splits(features,labels)
 
-features_train, features_test, labels_train, labels_test = \
-    train_test_split(features, labels, test_size=0.3, random_state=42)
+for train_index, test_index in sss.split(features,labels):
+    print("TRAIN:", train_index, "TEST:", test_index)
+    features_train, features_test = features[train_index], features[test_index]
+    labels_train, labels_test = labels[train_index], labels[test_index]
 
-"""Task 6: Dump your classifier, dataset, and features_list so anyone can
-check your results. You do not need to change anything below, but make sure
-that the version of poi_id.py that you submit can be run on its own and
-generates the necessary .pkl files for validating your results."""
+param_space = {
+    SVC : [
+        {
+            'pca__n_components': [2, 5],
+            'clf__kernel': [ 'sigmoid', 'poly','rbf'],
+            'clf__C':  [1, 5, 10, 100, 1000],
+            'clf__gamma': ['scale'],
+            'clf__class_weight': ['balanced', {1: 5}, {1:10}]
+        }
+        ],
+    DecisionTreeClassifier : [
+        {
+            'pca__n_components': [2, 5],
+            'clf__criterion': ['gini', 'entropy'],
+            'clf__max_depth': [2, 5, 10],
+            'clf__class_weight': ['balanced', {1: 5}, {1:10}]
+        }
+    ],
+    KNeighborsClassifier : [
+        {
+            'pca__n_components': [2, 5],
+            'clf__n_neighbors': [2, 4, 6, 10],
+            'clf__weights': ['distance', 'uniform'],
+            'clf__algorithm': ['kd_tree', 'ball_tree', 'auto', 'brute']
+        }
+    ],
+    RandomForestClassifier : [
+        {
+            'pca__n_components': [2, 5],
+            'clf__n_estimators': [25, 30, 50, 80, 100],
+            'clf__criterion': ['gini', 'entropy'],
+            'clf__max_depth': [3, 6, 8, 11, 15, 20],
+            'clf__class_weight': ['balanced', {1: 5}, {1:10}]
+        }
+    ],
+}
 
-dump_classifier_and_data(clf, my_dataset, features_list)
+for Model in [SVC, DecisionTreeClassifier, KNeighborsClassifier, RandomForestClassifier]:
+    print(Model)
+    t0 = time()
 
+    pipe = Pipeline([
+        ('pca', PCA()),
+        ('clf', Model()),
+    ])
+    print(param_space[Model])
+    parameters = param_space[Model]
+    clf = GridSearchCV(pipe, parameters, verbose=1, scoring='recall', cv=3)
+    clf.fit(features_train, labels_train)
 
+    labels_pred = clf.predict(features_test)
 
-#function to extract the key with the max and min value
-def extract_maxmin(dict_data, features_list):
-    key_max = []
-    key_min =[]
-    max_value = []
-    min_value = []
-    for item in features
-        key_max.append(max(data_dict.keys(), key=lambda k: data_dict[k][item]
-                      if isinstance(data_dict[k][item], int) else float("-inf")))
-        key_min.append(min(data_dict.keys(), key=lambda k: data_dict[k][item]
-                      if isinstance(data_dict[k][item], int) else float("+inf")))
-        max_value.append(data_dict[key_max][item])
-        min_value.append(data_dict[key_min][item])
-    return key_max, key_min, max_value, min_value
+    print(confusion_matrix(labels_test, labels_pred))
+    print(classification_report(labels_test, labels_pred))
+    print("done in %0.3fs" % (time() - t0))
