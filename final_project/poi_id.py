@@ -37,6 +37,7 @@ with open(dataset, 'rb') as file:
 print("The number of people contained in the dataset is: ", len(data_dict.keys()))
 print("The number of features for each person is: ", len(data_dict['METTS MARK'].keys()))
 
+# Identifying the people with a lot of data missing to eliminate them from the dataset
 low_data_ppl = []
 for person in data_dict.keys():
     count = 0
@@ -47,17 +48,20 @@ for person in data_dict.keys():
         low_data_ppl.append(person)
     data_dict[person]["count"] = count
 
+# Elimination of the people with a lot of data missing. Verification that no POI is being eliminated
 for person in low_data_ppl:
-    print(data_dict[person]["poi"])
+    print(person, 'will be eliminated from the dataset. POI status:', data_dict[person]["poi"])
     data_dict.pop(person)
 
-feature_NaN = {}
-for feature in financial_features + email_features:
-    count = 0
-    for person in data_dict.keys():
-        if data_dict[person][feature] == "NaN":
-            count += 1
-    feature_NaN[feature] = count
+# feature_NaN = {}
+# for feature in financial_features + email_features:
+#     count = 0
+#     for person in data_dict.keys():
+#         if data_dict[person][feature] == "NaN":
+#             count += 1
+#     feature_NaN[feature] = count
+
+# Identification of the people with extreme of the features to find more outliers
 
 for feature in financial_features + email_features + ["count"]:
     key_max = max(data_dict.keys(), key=lambda k: data_dict[k][feature]
@@ -104,8 +108,8 @@ my_dataset = data_dict
 
 for person in my_dataset.keys():
     if my_dataset[person]["from_messages"] != "NaN" and my_dataset[person]["to_messages"] != "NaN" and \
-            my_dataset[person]["from_this_person_to_poi"] != "NaN" and my_dataset[person][
-        "from_poi_to_this_person"] != "NaN":
+            my_dataset[person]["from_this_person_to_poi"] != "NaN" and \
+            my_dataset[person]["from_poi_to_this_person"] != "NaN":
         my_dataset[person]["interaction_POI"] = \
             100 * (my_dataset[person]["from_this_person_to_poi"] + my_dataset[person]["from_poi_to_this_person"]) / \
             (my_dataset[person]["from_messages"] + my_dataset[person]["to_messages"])
@@ -123,8 +127,6 @@ Note that if you want to do PCA or other multi-stage operations,
 you'll need to use Pipelines. For more info:
 http://scikit-learn.org/stable/modules/pipeline.html"""
 
-""" Test """
-
 from sklearn.pipeline import Pipeline
 from sklearn.decomposition import PCA
 from sklearn.metrics import classification_report
@@ -138,14 +140,17 @@ from sklearn.tree import DecisionTreeClassifier
 features = np.array(features)
 labels = np.array(labels)
 
+# As the labels are very unbalanced StratifiedShuffleSplit was used to separate train and test. Only 1 split was created.
 sss = StratifiedShuffleSplit(n_splits=1, test_size=0.3)
 sss.get_n_splits(features,labels)
 
 for train_index, test_index in sss.split(features,labels):
-    print("TRAIN:", train_index, "TEST:", test_index)
+    print("The train indexes are:", train_index)
+    print("The test indexes are:", test_index)
     features_train, features_test = features[train_index], features[test_index]
     labels_train, labels_test = labels[train_index], labels[test_index]
 
+# Param space definition for the PCA and the different models
 param_space = {
     SVC : [
         {
@@ -175,16 +180,18 @@ param_space = {
     RandomForestClassifier : [
         {
             'pca__n_components': [2, 5],
-            'clf__n_estimators': [25, 30, 50, 80, 100],
+            'clf__n_estimators': [25, 30, 50, 100],
             'clf__criterion': ['gini', 'entropy'],
-            'clf__max_depth': [3, 6, 8, 11, 15, 20],
+            'clf__max_depth': [3, 6, 8, 15, 20],
             'clf__class_weight': ['balanced', {1: 5}, {1:10}]
         }
     ],
 }
 
+# Models testing
+print('Testing of the different models')
 for Model in [SVC, DecisionTreeClassifier, KNeighborsClassifier, RandomForestClassifier]:
-    print(Model)
+    print('Model: ', Model)
     t0 = time()
 
     pipe = Pipeline([
@@ -193,11 +200,41 @@ for Model in [SVC, DecisionTreeClassifier, KNeighborsClassifier, RandomForestCla
     ])
     print(param_space[Model])
     parameters = param_space[Model]
-    clf = GridSearchCV(pipe, parameters, verbose=1, scoring='recall', cv=3)
+    clf = GridSearchCV(pipe, parameters, verbose=1, scoring='recall', n_jobs=-1, cv=5)
     clf.fit(features_train, labels_train)
 
     labels_pred = clf.predict(features_test)
-
+    print('The confusion matrix is:')
     print(confusion_matrix(labels_test, labels_pred))
+
+    print('The classification report is:')
     print(classification_report(labels_test, labels_pred))
     print("done in %0.3fs" % (time() - t0))
+
+    print('The parameters chosen are:', clf.best_params_)
+
+
+
+### Task 5: Tune your classifier to achieve better than .3 precision and recall
+### using our testing script. Check the tester.py script in the final project
+### folder for details on the evaluation method, especially the test_classifier
+### function. Because of the small size of the dataset, the script uses
+### stratified shuffle split cross validation. For more info:
+### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
+
+
+clf = Pipeline([
+    ('pca', PCA(n_components=2)),
+    ('clf', RandomForestClassifier(class_weight='balanced', criterion='gini', max_depth=3, n_estimators=100))
+])
+
+clf.fit(features_train, labels_train)
+
+
+
+### Task 6: Dump your classifier, dataset, and features_list so anyone can
+### check your results. You do not need to change anything below, but make sure
+### that the version of poi_id.py that you submit can be run on its own and
+### generates the necessary .pkl files for validating your results.
+
+dump_classifier_and_data(clf, my_dataset, features_list)
