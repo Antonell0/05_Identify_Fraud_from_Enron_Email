@@ -3,13 +3,12 @@
 import sys
 import pickle
 import numpy as np
-from sklearn.linear_model import SGDClassifier
 from time import time
 
 sys.path.append("../tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
-from tester import dump_classifier_and_data
+from identpoi.tester import dump_classifier_and_data
 import logging
 
 # create logger with 'spam_application'
@@ -30,8 +29,6 @@ logger.addHandler(fh)
 logger.addHandler(ch)
 
 logger.info('Start of the script')
-
-import matplotlib.pyplot
 
 financial_features = ['salary', 'deferral_payments', 'total_payments', 'loan_advances', 'bonus',
                       'restricted_stock_deferred', 'deferred_income', 'total_stock_value', 'expenses',
@@ -163,7 +160,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.decomposition import PCA
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import StratifiedShuffleSplit, GridSearchCV, train_test_split
+from sklearn.model_selection import StratifiedShuffleSplit, GridSearchCV
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
