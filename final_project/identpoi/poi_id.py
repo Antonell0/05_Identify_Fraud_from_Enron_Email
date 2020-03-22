@@ -153,7 +153,10 @@ for person in my_dataset.keys():
 
 
 # Extract features and labels from dataset for local testing
-features_list.append("interaction_POI", 'ratio_from_POI', 'ratio_to_POI')
+features_list.append("interaction_POI")
+features_list.append('ratio_from_POI')
+features_list.append('ratio_to_POI')
+
 data = featureFormat(my_dataset, features_list, sort_keys=True)
 labels, features = targetFeatureSplit(data)
 
@@ -182,7 +185,7 @@ features = np.array(features)
 labels = np.array(labels)
 
 # As the labels are very unbalanced StratifiedShuffleSplit was used to separate train and test. Only 1 split was created.
-sss = StratifiedShuffleSplit(n_splits=200, test_size=0.3)
+sss = StratifiedShuffleSplit(n_splits=1, test_size=0.3)
 
 for train_index, test_index in sss.split(features,labels):
     features_train, features_test = features[train_index], features[test_index]
@@ -235,7 +238,7 @@ with warnings.catch_warnings():
         ])
         print(param_space[Model])
         parameters = param_space[Model]
-        clf = GridSearchCV(pipe, parameters, scoring='f1', n_jobs=-1, cv=sss, verbose=0)
+        clf = GridSearchCV(pipe, parameters, scoring='f1', n_jobs=-1, cv=20, verbose=0)
         clf.fit(features, labels)
 
         labels_pred = clf.predict(features_test)
