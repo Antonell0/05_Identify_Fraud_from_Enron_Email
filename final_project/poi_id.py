@@ -10,6 +10,27 @@ sys.path.append("../tools/")
 
 from feature_format import featureFormat, targetFeatureSplit
 from tester import dump_classifier_and_data
+import logging
+
+# create logger with 'spam_application'
+logger = logging.getLogger('poi_id')
+logger.setLevel(logging.DEBUG)
+# create file handler which logs even debug messages
+fh = logging.FileHandler('poi_id.log')
+fh.setLevel(logging.DEBUG)
+# create console handler with a higher log level
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+# create formatter and add it to the handlers
+formatter = logging.Formatter('%(asctime)s - %(message)s')
+fh.setFormatter(formatter)
+ch.setFormatter(formatter)
+# add the handlers to the logger
+logger.addHandler(fh)
+logger.addHandler(ch)
+
+logger.info('Start of the script')
+
 import matplotlib.pyplot
 
 financial_features = ['salary', 'deferral_payments', 'total_payments', 'loan_advances', 'bonus',
@@ -34,6 +55,8 @@ with open(dataset, 'rb') as file:
     data_dict = pickle.load(file)
 
 # Initial exploration
+logger.info("The number of people contained in the dataset is: ", len(data_dict.keys()))
+logger.info("The number of features for each person is: ", len(data_dict['METTS MARK'].keys()))
 print("The number of people contained in the dataset is: ", len(data_dict.keys()))
 print("The number of features for each person is: ", len(data_dict['METTS MARK'].keys()))
 
@@ -50,6 +73,7 @@ for person in data_dict.keys():
 
 # Elimination of the people with a lot of data missing. Verification that no POI is being eliminated
 for person in low_data_ppl:
+    logger.info(person, 'will be eliminated from the dataset. POI status:', data_dict[person]["poi"])
     print(person, 'will be eliminated from the dataset. POI status:', data_dict[person]["poi"])
     data_dict.pop(person)
 
@@ -71,6 +95,8 @@ for feature in financial_features + email_features + ["count"]:
     max_value = data_dict[key_max][feature]
     min_value = data_dict[key_min][feature]
 
+    logger.info(f"{key_max} is the person with the max {feature}: {max_value} ")
+    logger.info(f"{key_min} is the person with the min {feature}: {min_value}")
     print(f"{key_max} is the person with the max {feature}: {max_value} ")
     print(f"{key_min} is the person with the min {feature}: {min_value}")
 
@@ -78,8 +104,14 @@ for feature in financial_features + email_features + ["count"]:
 
 data_dict.pop("TOTAL", 0)
 
-features_list = ['poi', 'salary', 'total_payments', 'bonus', 'total_stock_value']
-data = featureFormat(data_dict, features_list)
+features_list = ['poi', 'salary', 'deferral_payments', 'total_payments', 'loan_advances', 'bonus',
+                  'restricted_stock_deferred', 'deferred_income', 'total_stock_value', 'expenses',
+                  'exercised_stock_options', 'other', 'long_term_incentive', 'restricted_stock', 'director_fees',
+                  'to_messages', 'from_poi_to_this_person', 'from_messages', 'from_this_person_to_poi',
+                  'shared_receipt_with_poi']
+
+
+#data = featureFormat(data_dict, features_list)
 
 # for feature in features_list:
 #     if feature is not 'poi':
@@ -131,88 +163,191 @@ from sklearn.pipeline import Pipeline
 from sklearn.decomposition import PCA
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
-from sklearn.model_selection import StratifiedShuffleSplit, GridSearchCV
+from sklearn.model_selection import StratifiedShuffleSplit, GridSearchCV, train_test_split
 from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.preprocessing import Normalizer
+from sklearn.feature_selection import SelectKBest
+import warnings
 
 features = np.array(features)
 labels = np.array(labels)
 
 # As the labels are very unbalanced StratifiedShuffleSplit was used to separate train and test. Only 1 split was created.
-sss = StratifiedShuffleSplit(n_splits=1, test_size=0.3)
-sss.get_n_splits(features,labels)
+sss = StratifiedShuffleSplit(n_splits=200, test_size=0.3)
 
 for train_index, test_index in sss.split(features,labels):
-    print("The train indexes are:", train_index)
-    print("The test indexes are:", test_index)
+    # print("The train indexes are:", train_index)
+    # print("The test indexes are:", test_index)
     features_train, features_test = features[train_index], features[test_index]
     labels_train, labels_test = labels[train_index], labels[test_index]
+# features_train, features_test, labels_train, labels_test = \
+#     train_test_split(features, labels, test_size=0.3)
+
+
+n_features = np.arange(5, len(features_list))
+
+# identification of the most important features
+
+param_space = {
+    SVC: [
+        {
+           'select__k': n_features,
+        }
+        ],
+    DecisionTreeClassifier: [
+        {
+            'select__k': n_features,
+        }
+    ],
+    KNeighborsClassifier: [
+        {
+            'select__k': n_features,
+        }
+    ]
+}
+
+# Models testing
+logger.info('Testing of the different models')
+print('Testing of the different models')
+cm = {}
+cr = {}
+best_param = {}
+
+models_to_test = [SVC, DecisionTreeClassifier, KNeighborsClassifier]
+
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore")
+    for Model in models_to_test:
+        logger.info('Model: ', Model)
+        print('Model: ', Model)
+        t0 = time()
+        pipe = Pipeline([
+            ('scale', Normalizer()),
+            ('select', SelectKBest()),
+            ('clf', Model()),
+        ])
+        print(param_space[Model])
+        parameters = param_space[Model]
+        clf = GridSearchCV(pipe, parameters, scoring='f1', n_jobs=-1, cv=sss, verbose=0)
+        clf.fit(features, labels)
+
+        labels_pred = clf.predict(features_test)
+
+        cm[Model] = confusion_matrix(labels_test, labels_pred)
+        cr[Model] = classification_report(labels_test, labels_pred)
+        best_param[Model] = clf.best_params_
+
+        print("done in %0.3fs" % (time() - t0))
+        logger.info("done in %0.3fs" % (time() - t0))
+
+for Model in models_to_test:
+
+    logger.info('Model: ', Model)
+    logger.info('The confusion matrix is:')
+    logger.info(cm[Model])
+    logger.info('The classification report is:')
+    logger.info(cr[Model])
+    logger.info('The parameters chosen are:', best_param[Model])
+
+
+    print('Model: ', Model)
+    print('The confusion matrix is:')
+    print(cm[Model])
+
+    print('The classification report is:')
+    print(cr[Model])
+
+    print('The parameters chosen are:', best_param[Model])
 
 # Param space definition for the PCA and the different models
 param_space = {
-    SVC : [
+    SVC: [
         {
-            'pca__n_components': [2, 5],
+            'select__k' : [10],
+            'pca__n_components': [5, 7, 10],
             'clf__kernel': [ 'sigmoid', 'poly','rbf'],
             'clf__C':  [1, 5, 10, 100, 1000],
             'clf__gamma': ['scale'],
-            'clf__class_weight': ['balanced', {1: 5}, {1:10}]
+            'clf__class_weight': ['balanced']
         }
         ],
-    DecisionTreeClassifier : [
+    DecisionTreeClassifier: [
         {
-            'pca__n_components': [2, 5],
+            'select__k' : [10],
+            'pca__n_components': [5, 7, 10],
             'clf__criterion': ['gini', 'entropy'],
-            'clf__max_depth': [2, 5, 10],
-            'clf__class_weight': ['balanced', {1: 5}, {1:10}]
+            'clf__min_samples_split' : [2, 6, 8, 10, 20],
+            'clf__max_depth': [2, 5, 10, 20],
+            'clf__max_features': [None, 'sqrt', 'log2', 'auto'],
+            'clf__class_weight': ['balanced', {1: 5}]
         }
     ],
-    KNeighborsClassifier : [
+    KNeighborsClassifier: [
         {
-            'pca__n_components': [2, 5],
+            'select__k': [10],
+            'pca__n_components': [2, 5, 7],
             'clf__n_neighbors': [2, 4, 6, 10],
             'clf__weights': ['distance', 'uniform'],
             'clf__algorithm': ['kd_tree', 'ball_tree', 'auto', 'brute']
         }
     ],
-    RandomForestClassifier : [
+    RandomForestClassifier: [
         {
-            'pca__n_components': [2, 5],
-            'clf__n_estimators': [25, 30, 50, 100],
+            'select__k' : [10],
+            'pca__n_components': [2, 5, 7],
+            'clf__n_estimators': [25, 30, 50],
             'clf__criterion': ['gini', 'entropy'],
-            'clf__max_depth': [3, 6, 8, 15, 20],
-            'clf__class_weight': ['balanced', {1: 5}, {1:10}]
+            'clf__max_depth': [3, 6, 15, 20],
+#           'clf__class_weight': ['balanced', {1: 5}, {1:10}]
         }
     ],
 }
 
 # Models testing
 print('Testing of the different models')
-for Model in [SVC, DecisionTreeClassifier, KNeighborsClassifier, RandomForestClassifier]:
+cm = {}
+cr = {}
+best_param = {}
+for Model in models_to_test:
     print('Model: ', Model)
     t0 = time()
-
     pipe = Pipeline([
+        ('scale', Normalizer()),
+        ('select', SelectKBest()),
         ('pca', PCA()),
         ('clf', Model()),
     ])
     print(param_space[Model])
     parameters = param_space[Model]
-    clf = GridSearchCV(pipe, parameters, verbose=1, scoring='recall', n_jobs=-1, cv=5)
-    clf.fit(features_train, labels_train)
+    clf = GridSearchCV(pipe, parameters, scoring='f1', n_jobs=-1, cv=sss, verbose=0)
+    clf.fit(features, labels)
 
     labels_pred = clf.predict(features_test)
-    print('The confusion matrix is:')
-    print(confusion_matrix(labels_test, labels_pred))
 
-    print('The classification report is:')
-    print(classification_report(labels_test, labels_pred))
+    cm[Model] = confusion_matrix(labels_test, labels_pred)
+    cr[Model] = classification_report(labels_test, labels_pred)
+    best_param[Model] = clf.best_params_
     print("done in %0.3fs" % (time() - t0))
 
-    print('The parameters chosen are:', clf.best_params_)
+for Model in models_to_test:
 
+    logger.info('Model: ', Model)
+    logger.info('The confusion matrix is:')
+    logger.info(cm[Model])
+    logger.info('The classification report is:')
+    logger.info(cr[Model])
+    logger.info('The parameters chosen are:', best_param[Model])
+    print('Model: ', Model)
+    print('The confusion matrix is:')
+    print(cm[Model])
+
+    print('The classification report is:')
+    print(cr[Model])
+
+    print('The parameters chosen are:', best_param[Model])
 
 
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall
@@ -222,14 +357,25 @@ for Model in [SVC, DecisionTreeClassifier, KNeighborsClassifier, RandomForestCla
 ### stratified shuffle split cross validation. For more info:
 ### http://scikit-learn.org/stable/modules/generated/sklearn.cross_validation.StratifiedShuffleSplit.html
 
+for best_model in [DecisionTreeClassifier]: #[SVC, DecisionTreeClassifier, KNeighborsClassifier]: #, RandomForestClassifier]:
 
-clf = Pipeline([
-    ('pca', PCA(n_components=2)),
-    ('clf', RandomForestClassifier(class_weight='balanced', criterion='gini', max_depth=3, n_estimators=100))
-])
+    pipe = Pipeline([
+        ('scale', Normalizer()),
+        ('select', SelectKBest()),
+        ('pca', PCA()),
+        ('clf', best_model()),
+    ])
+    clf = pipe.set_params(**best_param[best_model])
 
-clf.fit(features_train, labels_train)
+    clf.fit(features_train, labels_train)
 
+    labels_pred = clf.predict(features_test)
+
+    print('The confusion matrix is:')
+    print(confusion_matrix(labels_test, labels_pred))
+
+    print('The classification report is:')
+    print(classification_report(labels_test, labels_pred))
 
 
 ### Task 6: Dump your classifier, dataset, and features_list so anyone can
