@@ -132,7 +132,7 @@ features_list = ['poi', 'salary', 'deferral_payments', 'total_payments', 'loan_a
 """Task 3: Create new feature(s)
 Store to my_dataset for easy export below."""
 
-"""Idea interaction with POI. Check how often mails from this persons are sent/received to POI"""
+"""Interaction with POI. Check how often mails from this persons are sent/received to POI"""
 my_dataset = data_dict
 
 for person in my_dataset.keys():
@@ -140,13 +140,20 @@ for person in my_dataset.keys():
             my_dataset[person]["from_this_person_to_poi"] != "NaN" and \
             my_dataset[person]["from_poi_to_this_person"] != "NaN":
         my_dataset[person]["interaction_POI"] = \
-            100 * (my_dataset[person]["from_this_person_to_poi"] + my_dataset[person]["from_poi_to_this_person"]) / \
+            (my_dataset[person]["from_this_person_to_poi"] + my_dataset[person]["from_poi_to_this_person"]) / \
             (my_dataset[person]["from_messages"] + my_dataset[person]["to_messages"])
+        my_dataset[person]["ratio_from_POI"] = \
+            my_dataset[person]["from_poi_to_this_person"] / my_dataset[person]["from_messages"]
+        my_dataset[person]["ratio_to_POI"] = \
+            my_dataset[person]["from_this_person_to_poi"] / my_dataset[person]["from_messages"]
     else:
         my_dataset[person]["interaction_POI"] = "NaN"
+        my_dataset[person]["ratio_from_POI"] = "NaN"
+        my_dataset[person]["ratio_to_POI"] = "NaN"
+
 
 # Extract features and labels from dataset for local testing
-features_list.append("interaction_POI")
+features_list.append("interaction_POI", 'ratio_from_POI', 'ratio_to_POI')
 data = featureFormat(my_dataset, features_list, sort_keys=True)
 labels, features = targetFeatureSplit(data)
 
@@ -169,6 +176,8 @@ from sklearn.preprocessing import Normalizer
 from sklearn.feature_selection import SelectKBest
 import warnings
 
+
+
 features = np.array(features)
 labels = np.array(labels)
 
@@ -176,8 +185,6 @@ labels = np.array(labels)
 sss = StratifiedShuffleSplit(n_splits=200, test_size=0.3)
 
 for train_index, test_index in sss.split(features,labels):
-    # print("The train indexes are:", train_index)
-    # print("The test indexes are:", test_index)
     features_train, features_test = features[train_index], features[test_index]
     labels_train, labels_test = labels[train_index], labels[test_index]
 # features_train, features_test, labels_train, labels_test = \
