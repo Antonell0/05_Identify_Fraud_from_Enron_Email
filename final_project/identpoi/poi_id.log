@@ -1,0 +1,683 @@
+2020-03-15 23:24:43,709 - Start of the script
+2020-03-15 23:24:44,119 - TOTAL is the person with the max salary: 26704229 
+2020-03-15 23:24:44,119 - BANNANTINE JAMES M is the person with the min salary: 477
+2020-03-15 23:24:44,119 - TOTAL is the person with the max deferral_payments: 32083396 
+2020-03-15 23:24:44,119 - HAYES ROBERT E is the person with the min deferral_payments: 7961
+2020-03-15 23:24:44,119 - TOTAL is the person with the max total_payments: 309886585 
+2020-03-15 23:24:44,119 - HAUG DAVID L is the person with the min total_payments: 475
+2020-03-15 23:24:44,119 - TOTAL is the person with the max loan_advances: 83925000 
+2020-03-15 23:24:44,120 - PICKERING MARK R is the person with the min loan_advances: 400000
+2020-03-15 23:24:44,120 - TOTAL is the person with the max bonus: 97343619 
+2020-03-15 23:24:44,120 - DODSON KEITH is the person with the min bonus: 70000
+2020-03-15 23:24:44,120 - BHATNAGAR SANJAY is the person with the max restricted_stock_deferred: 15456290 
+2020-03-15 23:24:44,120 - TOTAL is the person with the min restricted_stock_deferred: -7576788
+2020-03-15 23:24:44,120 - BOWEN JR RAYMOND M is the person with the max deferred_income: -833 
+2020-03-15 23:24:44,120 - TOTAL is the person with the min deferred_income: -27992891
+2020-03-15 23:24:44,120 - TOTAL is the person with the max total_stock_value: 434509511 
+2020-03-15 23:24:44,120 - PICKERING MARK R is the person with the min total_stock_value: 28798
+2020-03-15 23:24:44,120 - TOTAL is the person with the max expenses: 5235198 
+2020-03-15 23:24:44,120 - HAUG DAVID L is the person with the min expenses: 475
+2020-03-15 23:24:44,121 - TOTAL is the person with the max exercised_stock_options: 311764000 
+2020-03-15 23:24:44,121 - DEFFNER JOSEPH M is the person with the min exercised_stock_options: 17378
+2020-03-15 23:24:44,121 - TOTAL is the person with the max other: 42667589 
+2020-03-15 23:24:44,121 - WALLS JR ROBERT H is the person with the min other: 2
+2020-03-15 23:24:44,121 - TOTAL is the person with the max long_term_incentive: 48521928 
+2020-03-15 23:24:44,121 - HICKERSON GARY J is the person with the min long_term_incentive: 69223
+2020-03-15 23:24:44,121 - TOTAL is the person with the max restricted_stock: 130322299 
+2020-03-15 23:24:44,121 - BHATNAGAR SANJAY is the person with the min restricted_stock: -2604490
+2020-03-15 23:24:44,121 - TOTAL is the person with the max director_fees: 1398517 
+2020-03-15 23:24:44,121 - POWERS WILLIAM is the person with the min director_fees: 17500
+2020-03-15 23:24:44,121 - SHAPIRO RICHARD S is the person with the max to_messages: 15149 
+2020-03-15 23:24:44,121 - FOY JOE is the person with the min to_messages: 57
+2020-03-15 23:24:44,122 - METTS MARK is the person with the max email_address: mark.metts@enron.com 
+2020-03-15 23:24:44,122 - METTS MARK is the person with the min email_address: mark.metts@enron.com
+2020-03-15 23:24:44,122 - LAVORATO JOHN J is the person with the max from_poi_to_this_person: 528 
+2020-03-15 23:24:44,122 - MEYER ROCKFORD G is the person with the min from_poi_to_this_person: 0
+2020-03-15 23:24:44,122 - KAMINSKI WINCENTY J is the person with the max from_messages: 14368 
+2020-03-15 23:24:44,122 - CORDES WILLIAM R is the person with the min from_messages: 12
+2020-03-15 23:24:44,122 - DELAINEY DAVID W is the person with the max from_this_person_to_poi: 609 
+2020-03-15 23:24:44,122 - CORDES WILLIAM R is the person with the min from_this_person_to_poi: 0
+2020-03-15 23:24:44,122 - BELDEN TIMOTHY N is the person with the max shared_receipt_with_poi: 5521 
+2020-03-15 23:24:44,122 - FOY JOE is the person with the min shared_receipt_with_poi: 2
+2020-03-15 23:24:44,122 - BERBERIAN DAVID is the person with the max count: 13 
+2020-03-15 23:24:44,122 - HAEDICKE MARK E is the person with the min count: 2
+2020-03-15 23:24:44,272 - Testing of the different models
+2020-03-15 23:24:51,848 - done in 7.575s
+2020-03-15 23:24:57,910 - done in 6.061s
+2020-03-15 23:25:05,137 - done in 7.226s
+2020-03-15 23:25:05,144 - The confusion matrix is:
+2020-03-15 23:25:05,145 - [[29  0]
+ [ 6  0]]
+2020-03-15 23:25:05,145 - The classification report is:
+2020-03-15 23:25:05,145 -               precision    recall  f1-score   support
+
+         0.0       0.83      1.00      0.91        29
+         1.0       0.00      0.00      0.00         6
+
+    accuracy                           0.83        35
+   macro avg       0.41      0.50      0.45        35
+weighted avg       0.69      0.83      0.75        35
+
+2020-03-15 23:25:05,145 - The parameters chosen are:
+2020-03-15 23:25:05,146 - The confusion matrix is:
+2020-03-15 23:25:05,146 - [[29  0]
+ [ 1  5]]
+2020-03-15 23:25:05,146 - The classification report is:
+2020-03-15 23:25:05,146 -               precision    recall  f1-score   support
+
+         0.0       0.97      1.00      0.98        29
+         1.0       1.00      0.83      0.91         6
+
+    accuracy                           0.97        35
+   macro avg       0.98      0.92      0.95        35
+weighted avg       0.97      0.97      0.97        35
+
+2020-03-15 23:25:05,146 - The parameters chosen are:
+2020-03-15 23:25:05,147 - The confusion matrix is:
+2020-03-15 23:25:05,147 - [[29  0]
+ [ 5  1]]
+2020-03-15 23:25:05,147 - The classification report is:
+2020-03-15 23:25:05,147 -               precision    recall  f1-score   support
+
+         0.0       0.85      1.00      0.92        29
+         1.0       1.00      0.17      0.29         6
+
+    accuracy                           0.86        35
+   macro avg       0.93      0.58      0.60        35
+weighted avg       0.88      0.86      0.81        35
+
+2020-03-15 23:25:05,147 - The parameters chosen are:
+2020-03-15 23:32:27,445 - The confusion matrix is:
+2020-03-15 23:32:27,445 - [[21  8]
+ [ 4  2]]
+2020-03-15 23:32:27,445 - The classification report is:
+2020-03-15 23:32:27,445 -               precision    recall  f1-score   support
+
+         0.0       0.84      0.72      0.78        29
+         1.0       0.20      0.33      0.25         6
+
+    accuracy                           0.66        35
+   macro avg       0.52      0.53      0.51        35
+weighted avg       0.73      0.66      0.69        35
+
+2020-03-15 23:32:27,445 - The parameters chosen are:
+2020-03-15 23:32:27,446 - The confusion matrix is:
+2020-03-15 23:32:27,446 - [[27  2]
+ [ 5  1]]
+2020-03-15 23:32:27,446 - The classification report is:
+2020-03-15 23:32:27,446 -               precision    recall  f1-score   support
+
+         0.0       0.84      0.93      0.89        29
+         1.0       0.33      0.17      0.22         6
+
+    accuracy                           0.80        35
+   macro avg       0.59      0.55      0.55        35
+weighted avg       0.76      0.80      0.77        35
+
+2020-03-15 23:32:27,446 - The parameters chosen are:
+2020-03-15 23:32:27,447 - The confusion matrix is:
+2020-03-15 23:32:27,447 - [[29  0]
+ [ 0  6]]
+2020-03-15 23:32:27,447 - The classification report is:
+2020-03-15 23:32:27,447 -               precision    recall  f1-score   support
+
+         0.0       1.00      1.00      1.00        29
+         1.0       1.00      1.00      1.00         6
+
+    accuracy                           1.00        35
+   macro avg       1.00      1.00      1.00        35
+weighted avg       1.00      1.00      1.00        35
+
+2020-03-15 23:32:27,447 - The parameters chosen are:
+2020-03-22 07:34:43,683 - Start of the script
+2020-03-22 07:34:43,716 - TOTAL is the person with the max salary: 26704229 
+2020-03-22 07:34:43,716 - BANNANTINE JAMES M is the person with the min salary: 477
+2020-03-22 07:34:43,716 - TOTAL is the person with the max deferral_payments: 32083396 
+2020-03-22 07:34:43,716 - HAYES ROBERT E is the person with the min deferral_payments: 7961
+2020-03-22 07:34:43,716 - TOTAL is the person with the max total_payments: 309886585 
+2020-03-22 07:34:43,717 - HAUG DAVID L is the person with the min total_payments: 475
+2020-03-22 07:34:43,717 - TOTAL is the person with the max loan_advances: 83925000 
+2020-03-22 07:34:43,717 - PICKERING MARK R is the person with the min loan_advances: 400000
+2020-03-22 07:34:43,717 - TOTAL is the person with the max bonus: 97343619 
+2020-03-22 07:34:43,717 - DODSON KEITH is the person with the min bonus: 70000
+2020-03-22 07:34:43,717 - BHATNAGAR SANJAY is the person with the max restricted_stock_deferred: 15456290 
+2020-03-22 07:34:43,718 - TOTAL is the person with the min restricted_stock_deferred: -7576788
+2020-03-22 07:34:43,718 - BOWEN JR RAYMOND M is the person with the max deferred_income: -833 
+2020-03-22 07:34:43,718 - TOTAL is the person with the min deferred_income: -27992891
+2020-03-22 07:34:43,718 - TOTAL is the person with the max total_stock_value: 434509511 
+2020-03-22 07:34:43,718 - PICKERING MARK R is the person with the min total_stock_value: 28798
+2020-03-22 07:34:43,718 - TOTAL is the person with the max expenses: 5235198 
+2020-03-22 07:34:43,718 - HAUG DAVID L is the person with the min expenses: 475
+2020-03-22 07:34:43,719 - TOTAL is the person with the max exercised_stock_options: 311764000 
+2020-03-22 07:34:43,719 - DEFFNER JOSEPH M is the person with the min exercised_stock_options: 17378
+2020-03-22 07:34:43,719 - TOTAL is the person with the max other: 42667589 
+2020-03-22 07:34:43,719 - WALLS JR ROBERT H is the person with the min other: 2
+2020-03-22 07:34:43,719 - TOTAL is the person with the max long_term_incentive: 48521928 
+2020-03-22 07:34:43,719 - HICKERSON GARY J is the person with the min long_term_incentive: 69223
+2020-03-22 07:34:43,719 - TOTAL is the person with the max restricted_stock: 130322299 
+2020-03-22 07:34:43,719 - BHATNAGAR SANJAY is the person with the min restricted_stock: -2604490
+2020-03-22 07:34:43,719 - TOTAL is the person with the max director_fees: 1398517 
+2020-03-22 07:34:43,719 - POWERS WILLIAM is the person with the min director_fees: 17500
+2020-03-22 07:34:43,720 - SHAPIRO RICHARD S is the person with the max to_messages: 15149 
+2020-03-22 07:34:43,720 - FOY JOE is the person with the min to_messages: 57
+2020-03-22 07:34:43,720 - METTS MARK is the person with the max email_address: mark.metts@enron.com 
+2020-03-22 07:34:43,720 - METTS MARK is the person with the min email_address: mark.metts@enron.com
+2020-03-22 07:34:43,720 - LAVORATO JOHN J is the person with the max from_poi_to_this_person: 528 
+2020-03-22 07:34:43,720 - MEYER ROCKFORD G is the person with the min from_poi_to_this_person: 0
+2020-03-22 07:34:43,720 - KAMINSKI WINCENTY J is the person with the max from_messages: 14368 
+2020-03-22 07:34:43,720 - CORDES WILLIAM R is the person with the min from_messages: 12
+2020-03-22 07:34:43,721 - DELAINEY DAVID W is the person with the max from_this_person_to_poi: 609 
+2020-03-22 07:34:43,721 - CORDES WILLIAM R is the person with the min from_this_person_to_poi: 0
+2020-03-22 07:34:43,722 - BELDEN TIMOTHY N is the person with the max shared_receipt_with_poi: 5521 
+2020-03-22 07:34:43,722 - FOY JOE is the person with the min shared_receipt_with_poi: 2
+2020-03-22 07:34:43,722 - BERBERIAN DAVID is the person with the max count: 13 
+2020-03-22 07:34:43,723 - HAEDICKE MARK E is the person with the min count: 2
+2020-03-22 07:35:40,843 - Start of the script
+2020-03-22 07:35:40,865 - TOTAL is the person with the max salary: 26704229 
+2020-03-22 07:35:40,865 - BANNANTINE JAMES M is the person with the min salary: 477
+2020-03-22 07:35:40,866 - TOTAL is the person with the max deferral_payments: 32083396 
+2020-03-22 07:35:40,866 - HAYES ROBERT E is the person with the min deferral_payments: 7961
+2020-03-22 07:35:40,866 - TOTAL is the person with the max total_payments: 309886585 
+2020-03-22 07:35:40,866 - HAUG DAVID L is the person with the min total_payments: 475
+2020-03-22 07:35:40,866 - TOTAL is the person with the max loan_advances: 83925000 
+2020-03-22 07:35:40,866 - PICKERING MARK R is the person with the min loan_advances: 400000
+2020-03-22 07:35:40,866 - TOTAL is the person with the max bonus: 97343619 
+2020-03-22 07:35:40,866 - DODSON KEITH is the person with the min bonus: 70000
+2020-03-22 07:35:40,866 - BHATNAGAR SANJAY is the person with the max restricted_stock_deferred: 15456290 
+2020-03-22 07:35:40,866 - TOTAL is the person with the min restricted_stock_deferred: -7576788
+2020-03-22 07:35:40,866 - BOWEN JR RAYMOND M is the person with the max deferred_income: -833 
+2020-03-22 07:35:40,866 - TOTAL is the person with the min deferred_income: -27992891
+2020-03-22 07:35:40,867 - TOTAL is the person with the max total_stock_value: 434509511 
+2020-03-22 07:35:40,867 - PICKERING MARK R is the person with the min total_stock_value: 28798
+2020-03-22 07:35:40,867 - TOTAL is the person with the max expenses: 5235198 
+2020-03-22 07:35:40,867 - HAUG DAVID L is the person with the min expenses: 475
+2020-03-22 07:35:40,867 - TOTAL is the person with the max exercised_stock_options: 311764000 
+2020-03-22 07:35:40,867 - DEFFNER JOSEPH M is the person with the min exercised_stock_options: 17378
+2020-03-22 07:35:40,867 - TOTAL is the person with the max other: 42667589 
+2020-03-22 07:35:40,867 - WALLS JR ROBERT H is the person with the min other: 2
+2020-03-22 07:35:40,867 - TOTAL is the person with the max long_term_incentive: 48521928 
+2020-03-22 07:35:40,867 - HICKERSON GARY J is the person with the min long_term_incentive: 69223
+2020-03-22 07:35:40,867 - TOTAL is the person with the max restricted_stock: 130322299 
+2020-03-22 07:35:40,867 - BHATNAGAR SANJAY is the person with the min restricted_stock: -2604490
+2020-03-22 07:35:40,868 - TOTAL is the person with the max director_fees: 1398517 
+2020-03-22 07:35:40,868 - POWERS WILLIAM is the person with the min director_fees: 17500
+2020-03-22 07:35:40,868 - SHAPIRO RICHARD S is the person with the max to_messages: 15149 
+2020-03-22 07:35:40,868 - FOY JOE is the person with the min to_messages: 57
+2020-03-22 07:35:40,868 - METTS MARK is the person with the max email_address: mark.metts@enron.com 
+2020-03-22 07:35:40,868 - METTS MARK is the person with the min email_address: mark.metts@enron.com
+2020-03-22 07:35:40,868 - LAVORATO JOHN J is the person with the max from_poi_to_this_person: 528 
+2020-03-22 07:35:40,868 - MEYER ROCKFORD G is the person with the min from_poi_to_this_person: 0
+2020-03-22 07:35:40,868 - KAMINSKI WINCENTY J is the person with the max from_messages: 14368 
+2020-03-22 07:35:40,868 - CORDES WILLIAM R is the person with the min from_messages: 12
+2020-03-22 07:35:40,868 - DELAINEY DAVID W is the person with the max from_this_person_to_poi: 609 
+2020-03-22 07:35:40,868 - CORDES WILLIAM R is the person with the min from_this_person_to_poi: 0
+2020-03-22 07:35:40,868 - BELDEN TIMOTHY N is the person with the max shared_receipt_with_poi: 5521 
+2020-03-22 07:35:40,868 - FOY JOE is the person with the min shared_receipt_with_poi: 2
+2020-03-22 07:35:40,869 - BERBERIAN DAVID is the person with the max count: 13 
+2020-03-22 07:35:40,869 - HAEDICKE MARK E is the person with the min count: 2
+2020-03-22 07:35:40,987 - Testing of the different models
+2020-03-22 07:36:16,525 - Start of the script
+2020-03-22 07:36:16,551 - TOTAL is the person with the max salary: 26704229 
+2020-03-22 07:36:16,551 - BANNANTINE JAMES M is the person with the min salary: 477
+2020-03-22 07:36:16,551 - TOTAL is the person with the max deferral_payments: 32083396 
+2020-03-22 07:36:16,551 - HAYES ROBERT E is the person with the min deferral_payments: 7961
+2020-03-22 07:36:16,551 - TOTAL is the person with the max total_payments: 309886585 
+2020-03-22 07:36:16,551 - HAUG DAVID L is the person with the min total_payments: 475
+2020-03-22 07:36:16,551 - TOTAL is the person with the max loan_advances: 83925000 
+2020-03-22 07:36:16,551 - PICKERING MARK R is the person with the min loan_advances: 400000
+2020-03-22 07:36:16,551 - TOTAL is the person with the max bonus: 97343619 
+2020-03-22 07:36:16,551 - DODSON KEITH is the person with the min bonus: 70000
+2020-03-22 07:36:16,552 - BHATNAGAR SANJAY is the person with the max restricted_stock_deferred: 15456290 
+2020-03-22 07:36:16,552 - TOTAL is the person with the min restricted_stock_deferred: -7576788
+2020-03-22 07:36:16,552 - BOWEN JR RAYMOND M is the person with the max deferred_income: -833 
+2020-03-22 07:36:16,552 - TOTAL is the person with the min deferred_income: -27992891
+2020-03-22 07:36:16,552 - TOTAL is the person with the max total_stock_value: 434509511 
+2020-03-22 07:36:16,552 - PICKERING MARK R is the person with the min total_stock_value: 28798
+2020-03-22 07:36:16,552 - TOTAL is the person with the max expenses: 5235198 
+2020-03-22 07:36:16,552 - HAUG DAVID L is the person with the min expenses: 475
+2020-03-22 07:36:16,552 - TOTAL is the person with the max exercised_stock_options: 311764000 
+2020-03-22 07:36:16,552 - DEFFNER JOSEPH M is the person with the min exercised_stock_options: 17378
+2020-03-22 07:36:16,552 - TOTAL is the person with the max other: 42667589 
+2020-03-22 07:36:16,552 - WALLS JR ROBERT H is the person with the min other: 2
+2020-03-22 07:36:16,553 - TOTAL is the person with the max long_term_incentive: 48521928 
+2020-03-22 07:36:16,553 - HICKERSON GARY J is the person with the min long_term_incentive: 69223
+2020-03-22 07:36:16,553 - TOTAL is the person with the max restricted_stock: 130322299 
+2020-03-22 07:36:16,553 - BHATNAGAR SANJAY is the person with the min restricted_stock: -2604490
+2020-03-22 07:36:16,553 - TOTAL is the person with the max director_fees: 1398517 
+2020-03-22 07:36:16,553 - POWERS WILLIAM is the person with the min director_fees: 17500
+2020-03-22 07:36:16,554 - SHAPIRO RICHARD S is the person with the max to_messages: 15149 
+2020-03-22 07:36:16,554 - FOY JOE is the person with the min to_messages: 57
+2020-03-22 07:36:16,554 - METTS MARK is the person with the max email_address: mark.metts@enron.com 
+2020-03-22 07:36:16,554 - METTS MARK is the person with the min email_address: mark.metts@enron.com
+2020-03-22 07:36:16,554 - LAVORATO JOHN J is the person with the max from_poi_to_this_person: 528 
+2020-03-22 07:36:16,554 - MEYER ROCKFORD G is the person with the min from_poi_to_this_person: 0
+2020-03-22 07:36:16,555 - KAMINSKI WINCENTY J is the person with the max from_messages: 14368 
+2020-03-22 07:36:16,555 - CORDES WILLIAM R is the person with the min from_messages: 12
+2020-03-22 07:36:16,555 - DELAINEY DAVID W is the person with the max from_this_person_to_poi: 609 
+2020-03-22 07:36:16,555 - CORDES WILLIAM R is the person with the min from_this_person_to_poi: 0
+2020-03-22 07:36:16,555 - BELDEN TIMOTHY N is the person with the max shared_receipt_with_poi: 5521 
+2020-03-22 07:36:16,555 - FOY JOE is the person with the min shared_receipt_with_poi: 2
+2020-03-22 07:36:16,556 - BERBERIAN DAVID is the person with the max count: 13 
+2020-03-22 07:36:16,556 - HAEDICKE MARK E is the person with the min count: 2
+2020-03-22 07:36:16,672 - Testing of the different models
+2020-03-22 07:36:18,731 - done in 2.058s
+2020-03-22 07:36:19,410 - done in 0.678s
+2020-03-22 07:36:20,081 - done in 0.671s
+2020-03-22 07:36:20,082 - The confusion matrix is:
+2020-03-22 07:36:20,082 - [[29  0]
+ [ 6  0]]
+2020-03-22 07:36:20,082 - The classification report is:
+2020-03-22 07:36:20,082 -               precision    recall  f1-score   support
+
+         0.0       0.83      1.00      0.91        29
+         1.0       0.00      0.00      0.00         6
+
+    accuracy                           0.83        35
+   macro avg       0.41      0.50      0.45        35
+weighted avg       0.69      0.83      0.75        35
+
+2020-03-22 07:36:20,082 - The parameters chosen are:
+2020-03-22 07:36:20,082 - The confusion matrix is:
+2020-03-22 07:36:20,083 - [[29  0]
+ [ 0  6]]
+2020-03-22 07:36:20,083 - The classification report is:
+2020-03-22 07:36:20,083 -               precision    recall  f1-score   support
+
+         0.0       1.00      1.00      1.00        29
+         1.0       1.00      1.00      1.00         6
+
+    accuracy                           1.00        35
+   macro avg       1.00      1.00      1.00        35
+weighted avg       1.00      1.00      1.00        35
+
+2020-03-22 07:36:20,083 - The parameters chosen are:
+2020-03-22 07:36:20,083 - The confusion matrix is:
+2020-03-22 07:36:20,083 - [[29  0]
+ [ 5  1]]
+2020-03-22 07:36:20,084 - The classification report is:
+2020-03-22 07:36:20,084 -               precision    recall  f1-score   support
+
+         0.0       0.85      1.00      0.92        29
+         1.0       1.00      0.17      0.29         6
+
+    accuracy                           0.86        35
+   macro avg       0.93      0.58      0.60        35
+weighted avg       0.88      0.86      0.81        35
+
+2020-03-22 07:36:20,084 - The parameters chosen are:
+2020-03-22 07:36:22,498 - The confusion matrix is:
+2020-03-22 07:36:22,498 - [[27  2]
+ [ 0  6]]
+2020-03-22 07:36:22,499 - The classification report is:
+2020-03-22 07:36:22,499 -               precision    recall  f1-score   support
+
+         0.0       1.00      0.93      0.96        29
+         1.0       0.75      1.00      0.86         6
+
+    accuracy                           0.94        35
+   macro avg       0.88      0.97      0.91        35
+weighted avg       0.96      0.94      0.95        35
+
+2020-03-22 07:36:22,499 - The parameters chosen are:
+2020-03-22 07:36:22,499 - The confusion matrix is:
+2020-03-22 07:36:22,499 - [[28  1]
+ [ 0  6]]
+2020-03-22 07:36:22,500 - The classification report is:
+2020-03-22 07:36:22,500 -               precision    recall  f1-score   support
+
+         0.0       1.00      0.97      0.98        29
+         1.0       0.86      1.00      0.92         6
+
+    accuracy                           0.97        35
+   macro avg       0.93      0.98      0.95        35
+weighted avg       0.98      0.97      0.97        35
+
+2020-03-22 07:36:22,500 - The parameters chosen are:
+2020-03-22 07:36:22,500 - The confusion matrix is:
+2020-03-22 07:36:22,501 - [[29  0]
+ [ 0  6]]
+2020-03-22 07:36:22,501 - The classification report is:
+2020-03-22 07:36:22,501 -               precision    recall  f1-score   support
+
+         0.0       1.00      1.00      1.00        29
+         1.0       1.00      1.00      1.00         6
+
+    accuracy                           1.00        35
+   macro avg       1.00      1.00      1.00        35
+weighted avg       1.00      1.00      1.00        35
+
+2020-03-22 07:36:22,501 - The parameters chosen are:
+2020-03-22 07:53:10,914 - Start of the script
+2020-03-22 07:53:10,942 - TOTAL is the person with the max salary: 26704229 
+2020-03-22 07:53:10,942 - BANNANTINE JAMES M is the person with the min salary: 477
+2020-03-22 07:53:10,943 - TOTAL is the person with the max deferral_payments: 32083396 
+2020-03-22 07:53:10,943 - HAYES ROBERT E is the person with the min deferral_payments: 7961
+2020-03-22 07:53:10,943 - TOTAL is the person with the max total_payments: 309886585 
+2020-03-22 07:53:10,943 - HAUG DAVID L is the person with the min total_payments: 475
+2020-03-22 07:53:10,943 - TOTAL is the person with the max loan_advances: 83925000 
+2020-03-22 07:53:10,943 - PICKERING MARK R is the person with the min loan_advances: 400000
+2020-03-22 07:53:10,943 - TOTAL is the person with the max bonus: 97343619 
+2020-03-22 07:53:10,943 - DODSON KEITH is the person with the min bonus: 70000
+2020-03-22 07:53:10,943 - BHATNAGAR SANJAY is the person with the max restricted_stock_deferred: 15456290 
+2020-03-22 07:53:10,943 - TOTAL is the person with the min restricted_stock_deferred: -7576788
+2020-03-22 07:53:10,944 - BOWEN JR RAYMOND M is the person with the max deferred_income: -833 
+2020-03-22 07:53:10,944 - TOTAL is the person with the min deferred_income: -27992891
+2020-03-22 07:53:10,944 - TOTAL is the person with the max total_stock_value: 434509511 
+2020-03-22 07:53:10,944 - PICKERING MARK R is the person with the min total_stock_value: 28798
+2020-03-22 07:53:10,944 - TOTAL is the person with the max expenses: 5235198 
+2020-03-22 07:53:10,944 - HAUG DAVID L is the person with the min expenses: 475
+2020-03-22 07:53:10,944 - TOTAL is the person with the max exercised_stock_options: 311764000 
+2020-03-22 07:53:10,944 - DEFFNER JOSEPH M is the person with the min exercised_stock_options: 17378
+2020-03-22 07:53:10,944 - TOTAL is the person with the max other: 42667589 
+2020-03-22 07:53:10,944 - WALLS JR ROBERT H is the person with the min other: 2
+2020-03-22 07:53:10,944 - TOTAL is the person with the max long_term_incentive: 48521928 
+2020-03-22 07:53:10,944 - HICKERSON GARY J is the person with the min long_term_incentive: 69223
+2020-03-22 07:53:10,945 - TOTAL is the person with the max restricted_stock: 130322299 
+2020-03-22 07:53:10,945 - BHATNAGAR SANJAY is the person with the min restricted_stock: -2604490
+2020-03-22 07:53:10,945 - TOTAL is the person with the max director_fees: 1398517 
+2020-03-22 07:53:10,945 - POWERS WILLIAM is the person with the min director_fees: 17500
+2020-03-22 07:53:10,945 - SHAPIRO RICHARD S is the person with the max to_messages: 15149 
+2020-03-22 07:53:10,945 - FOY JOE is the person with the min to_messages: 57
+2020-03-22 07:53:10,945 - METTS MARK is the person with the max email_address: mark.metts@enron.com 
+2020-03-22 07:53:10,945 - METTS MARK is the person with the min email_address: mark.metts@enron.com
+2020-03-22 07:53:10,945 - LAVORATO JOHN J is the person with the max from_poi_to_this_person: 528 
+2020-03-22 07:53:10,945 - MEYER ROCKFORD G is the person with the min from_poi_to_this_person: 0
+2020-03-22 07:53:10,945 - KAMINSKI WINCENTY J is the person with the max from_messages: 14368 
+2020-03-22 07:53:10,946 - CORDES WILLIAM R is the person with the min from_messages: 12
+2020-03-22 07:53:10,946 - DELAINEY DAVID W is the person with the max from_this_person_to_poi: 609 
+2020-03-22 07:53:10,946 - CORDES WILLIAM R is the person with the min from_this_person_to_poi: 0
+2020-03-22 07:53:10,946 - BELDEN TIMOTHY N is the person with the max shared_receipt_with_poi: 5521 
+2020-03-22 07:53:10,946 - FOY JOE is the person with the min shared_receipt_with_poi: 2
+2020-03-22 07:53:10,946 - BERBERIAN DAVID is the person with the max count: 13 
+2020-03-22 07:53:10,946 - HAEDICKE MARK E is the person with the min count: 2
+2020-03-22 07:53:39,681 - Start of the script
+2020-03-22 07:53:39,708 - TOTAL is the person with the max salary: 26704229 
+2020-03-22 07:53:39,708 - BANNANTINE JAMES M is the person with the min salary: 477
+2020-03-22 07:53:39,708 - TOTAL is the person with the max deferral_payments: 32083396 
+2020-03-22 07:53:39,708 - HAYES ROBERT E is the person with the min deferral_payments: 7961
+2020-03-22 07:53:39,708 - TOTAL is the person with the max total_payments: 309886585 
+2020-03-22 07:53:39,708 - HAUG DAVID L is the person with the min total_payments: 475
+2020-03-22 07:53:39,708 - TOTAL is the person with the max loan_advances: 83925000 
+2020-03-22 07:53:39,708 - PICKERING MARK R is the person with the min loan_advances: 400000
+2020-03-22 07:53:39,709 - TOTAL is the person with the max bonus: 97343619 
+2020-03-22 07:53:39,709 - DODSON KEITH is the person with the min bonus: 70000
+2020-03-22 07:53:39,709 - BHATNAGAR SANJAY is the person with the max restricted_stock_deferred: 15456290 
+2020-03-22 07:53:39,709 - TOTAL is the person with the min restricted_stock_deferred: -7576788
+2020-03-22 07:53:39,709 - BOWEN JR RAYMOND M is the person with the max deferred_income: -833 
+2020-03-22 07:53:39,709 - TOTAL is the person with the min deferred_income: -27992891
+2020-03-22 07:53:39,709 - TOTAL is the person with the max total_stock_value: 434509511 
+2020-03-22 07:53:39,709 - PICKERING MARK R is the person with the min total_stock_value: 28798
+2020-03-22 07:53:39,709 - TOTAL is the person with the max expenses: 5235198 
+2020-03-22 07:53:39,709 - HAUG DAVID L is the person with the min expenses: 475
+2020-03-22 07:53:39,710 - TOTAL is the person with the max exercised_stock_options: 311764000 
+2020-03-22 07:53:39,710 - DEFFNER JOSEPH M is the person with the min exercised_stock_options: 17378
+2020-03-22 07:53:39,710 - TOTAL is the person with the max other: 42667589 
+2020-03-22 07:53:39,710 - WALLS JR ROBERT H is the person with the min other: 2
+2020-03-22 07:53:39,710 - TOTAL is the person with the max long_term_incentive: 48521928 
+2020-03-22 07:53:39,710 - HICKERSON GARY J is the person with the min long_term_incentive: 69223
+2020-03-22 07:53:39,710 - TOTAL is the person with the max restricted_stock: 130322299 
+2020-03-22 07:53:39,710 - BHATNAGAR SANJAY is the person with the min restricted_stock: -2604490
+2020-03-22 07:53:39,710 - TOTAL is the person with the max director_fees: 1398517 
+2020-03-22 07:53:39,710 - POWERS WILLIAM is the person with the min director_fees: 17500
+2020-03-22 07:53:39,711 - SHAPIRO RICHARD S is the person with the max to_messages: 15149 
+2020-03-22 07:53:39,711 - FOY JOE is the person with the min to_messages: 57
+2020-03-22 07:53:39,711 - METTS MARK is the person with the max email_address: mark.metts@enron.com 
+2020-03-22 07:53:39,711 - METTS MARK is the person with the min email_address: mark.metts@enron.com
+2020-03-22 07:53:39,711 - LAVORATO JOHN J is the person with the max from_poi_to_this_person: 528 
+2020-03-22 07:53:39,711 - MEYER ROCKFORD G is the person with the min from_poi_to_this_person: 0
+2020-03-22 07:53:39,711 - KAMINSKI WINCENTY J is the person with the max from_messages: 14368 
+2020-03-22 07:53:39,711 - CORDES WILLIAM R is the person with the min from_messages: 12
+2020-03-22 07:53:39,711 - DELAINEY DAVID W is the person with the max from_this_person_to_poi: 609 
+2020-03-22 07:53:39,711 - CORDES WILLIAM R is the person with the min from_this_person_to_poi: 0
+2020-03-22 07:53:39,712 - BELDEN TIMOTHY N is the person with the max shared_receipt_with_poi: 5521 
+2020-03-22 07:53:39,712 - FOY JOE is the person with the min shared_receipt_with_poi: 2
+2020-03-22 07:53:39,712 - BERBERIAN DAVID is the person with the max count: 13 
+2020-03-22 07:53:39,712 - HAEDICKE MARK E is the person with the min count: 2
+2020-03-22 07:53:40,249 - Testing of the different models
+2020-03-22 07:53:42,362 - done in 2.112s
+2020-03-22 07:53:43,065 - done in 0.702s
+2020-03-22 07:53:43,798 - done in 0.733s
+2020-03-22 07:53:43,799 - The confusion matrix is:
+2020-03-22 07:53:43,799 - [[29  0]
+ [ 6  0]]
+2020-03-22 07:53:43,800 - The classification report is:
+2020-03-22 07:53:43,800 -               precision    recall  f1-score   support
+
+         0.0       0.83      1.00      0.91        29
+         1.0       0.00      0.00      0.00         6
+
+    accuracy                           0.83        35
+   macro avg       0.41      0.50      0.45        35
+weighted avg       0.69      0.83      0.75        35
+
+2020-03-22 07:53:43,800 - The parameters chosen are:
+2020-03-22 07:53:43,800 - The confusion matrix is:
+2020-03-22 07:53:43,800 - [[29  0]
+ [ 0  6]]
+2020-03-22 07:53:43,800 - The classification report is:
+2020-03-22 07:53:43,801 -               precision    recall  f1-score   support
+
+         0.0       1.00      1.00      1.00        29
+         1.0       1.00      1.00      1.00         6
+
+    accuracy                           1.00        35
+   macro avg       1.00      1.00      1.00        35
+weighted avg       1.00      1.00      1.00        35
+
+2020-03-22 07:53:43,801 - The parameters chosen are:
+2020-03-22 07:53:43,801 - The confusion matrix is:
+2020-03-22 07:53:43,801 - [[29  0]
+ [ 5  1]]
+2020-03-22 07:53:43,801 - The classification report is:
+2020-03-22 07:53:43,801 -               precision    recall  f1-score   support
+
+         0.0       0.85      1.00      0.92        29
+         1.0       1.00      0.17      0.29         6
+
+    accuracy                           0.86        35
+   macro avg       0.93      0.58      0.60        35
+weighted avg       0.88      0.86      0.81        35
+
+2020-03-22 07:53:43,801 - The parameters chosen are:
+2020-03-22 08:33:15,208 - The confusion matrix is:
+2020-03-22 08:33:15,209 - [[20  9]
+ [ 5  1]]
+2020-03-22 08:33:15,209 - The classification report is:
+2020-03-22 08:33:15,209 -               precision    recall  f1-score   support
+
+         0.0       0.80      0.69      0.74        29
+         1.0       0.10      0.17      0.12         6
+
+    accuracy                           0.60        35
+   macro avg       0.45      0.43      0.43        35
+weighted avg       0.68      0.60      0.64        35
+
+2020-03-22 08:33:15,209 - The parameters chosen are:
+2020-03-22 08:33:15,210 - The confusion matrix is:
+2020-03-22 08:33:15,210 - [[17 12]
+ [ 0  6]]
+2020-03-22 08:33:15,210 - The classification report is:
+2020-03-22 08:33:15,210 -               precision    recall  f1-score   support
+
+         0.0       1.00      0.59      0.74        29
+         1.0       0.33      1.00      0.50         6
+
+    accuracy                           0.66        35
+   macro avg       0.67      0.79      0.62        35
+weighted avg       0.89      0.66      0.70        35
+
+2020-03-22 08:33:15,210 - The parameters chosen are:
+2020-03-22 08:33:15,210 - The confusion matrix is:
+2020-03-22 08:33:15,210 - [[29  0]
+ [ 0  6]]
+2020-03-22 08:33:15,210 - The classification report is:
+2020-03-22 08:33:15,210 -               precision    recall  f1-score   support
+
+         0.0       1.00      1.00      1.00        29
+         1.0       1.00      1.00      1.00         6
+
+    accuracy                           1.00        35
+   macro avg       1.00      1.00      1.00        35
+weighted avg       1.00      1.00      1.00        35
+
+2020-03-22 08:33:15,211 - The parameters chosen are:
+2020-03-22 09:30:41,588 - The confusion matrix is:
+2020-03-22 09:30:41,588 - [[20  9]
+ [ 5  1]]
+2020-03-22 09:30:41,588 - The classification report is:
+2020-03-22 09:30:41,588 -               precision    recall  f1-score   support
+
+         0.0       0.80      0.69      0.74        29
+         1.0       0.10      0.17      0.12         6
+
+    accuracy                           0.60        35
+   macro avg       0.45      0.43      0.43        35
+weighted avg       0.68      0.60      0.64        35
+
+2020-03-22 09:30:41,590 - The confusion matrix is:
+2020-03-22 09:30:41,590 - [[17 12]
+ [ 0  6]]
+2020-03-22 09:30:41,590 - The classification report is:
+2020-03-22 09:30:41,590 -               precision    recall  f1-score   support
+
+         0.0       1.00      0.59      0.74        29
+         1.0       0.33      1.00      0.50         6
+
+    accuracy                           0.66        35
+   macro avg       0.67      0.79      0.62        35
+weighted avg       0.89      0.66      0.70        35
+
+2020-03-22 09:30:41,591 - The confusion matrix is:
+2020-03-22 09:30:41,591 - [[29  0]
+ [ 0  6]]
+2020-03-22 09:30:41,591 - The classification report is:
+2020-03-22 09:30:41,591 -               precision    recall  f1-score   support
+
+         0.0       1.00      1.00      1.00        29
+         1.0       1.00      1.00      1.00         6
+
+    accuracy                           1.00        35
+   macro avg       1.00      1.00      1.00        35
+weighted avg       1.00      1.00      1.00        35
+
+2020-03-22 09:33:23,447 - The parameters chosen are: {'clf__algorithm': 'kd_tree', 'clf__n_neighbors': 2, 'clf__weights': 'distance', 'pca__n_components': 2, 'select__k': 10}
+2020-03-22 09:34:37,919 - The confusion matrix is: [[20  9]
+ [ 5  1]]
+2020-03-22 09:34:37,920 - The classification report is:
+2020-03-22 09:34:37,920 -               precision    recall  f1-score   support
+
+         0.0       0.80      0.69      0.74        29
+         1.0       0.10      0.17      0.12         6
+
+    accuracy                           0.60        35
+   macro avg       0.45      0.43      0.43        35
+weighted avg       0.68      0.60      0.64        35
+
+2020-03-22 09:34:37,920 - The parameters chosen are: {'clf__C': 1, 'clf__class_weight': 'balanced', 'clf__gamma': 'scale', 'clf__kernel': 'sigmoid', 'pca__n_components': 5, 'select__k': 10}
+2020-03-22 09:34:37,920 - The confusion matrix is: [[17 12]
+ [ 0  6]]
+2020-03-22 09:34:37,920 - The classification report is:
+2020-03-22 09:34:37,920 -               precision    recall  f1-score   support
+
+         0.0       1.00      0.59      0.74        29
+         1.0       0.33      1.00      0.50         6
+
+    accuracy                           0.66        35
+   macro avg       0.67      0.79      0.62        35
+weighted avg       0.89      0.66      0.70        35
+
+2020-03-22 09:34:37,921 - The parameters chosen are: {'clf__class_weight': 'balanced', 'clf__criterion': 'entropy', 'clf__max_depth': 2, 'clf__max_features': None, 'clf__min_samples_split': 20, 'pca__n_components': 5, 'select__k': 10}
+2020-03-22 09:34:37,921 - The confusion matrix is: [[29  0]
+ [ 0  6]]
+2020-03-22 09:34:37,921 - The classification report is:
+2020-03-22 09:34:37,921 -               precision    recall  f1-score   support
+
+         0.0       1.00      1.00      1.00        29
+         1.0       1.00      1.00      1.00         6
+
+    accuracy                           1.00        35
+   macro avg       1.00      1.00      1.00        35
+weighted avg       1.00      1.00      1.00        35
+
+2020-03-22 09:34:37,921 - The parameters chosen are: {'clf__algorithm': 'kd_tree', 'clf__n_neighbors': 2, 'clf__weights': 'distance', 'pca__n_components': 2, 'select__k': 10}
+2020-03-22 09:35:14,612 - The confusion matrix is: [[20  9]
+ [ 5  1]]
+2020-03-22 09:35:14,617 - The classification report is:
+2020-03-22 09:35:14,617 -               precision    recall  f1-score   support
+
+         0.0       0.80      0.69      0.74        29
+         1.0       0.10      0.17      0.12         6
+
+    accuracy                           0.60        35
+   macro avg       0.45      0.43      0.43        35
+weighted avg       0.68      0.60      0.64        35
+
+2020-03-22 09:35:14,617 - The parameters chosen are: {'clf__C': 1, 'clf__class_weight': 'balanced', 'clf__gamma': 'scale', 'clf__kernel': 'sigmoid', 'pca__n_components': 5, 'select__k': 10}
+2020-03-22 09:35:14,618 - The confusion matrix is: [[17 12]
+ [ 0  6]]
+2020-03-22 09:35:14,618 - The classification report is:
+2020-03-22 09:35:14,618 -               precision    recall  f1-score   support
+
+         0.0       1.00      0.59      0.74        29
+         1.0       0.33      1.00      0.50         6
+
+    accuracy                           0.66        35
+   macro avg       0.67      0.79      0.62        35
+weighted avg       0.89      0.66      0.70        35
+
+2020-03-22 09:35:14,618 - The parameters chosen are: {'clf__class_weight': 'balanced', 'clf__criterion': 'entropy', 'clf__max_depth': 2, 'clf__max_features': None, 'clf__min_samples_split': 20, 'pca__n_components': 5, 'select__k': 10}
+2020-03-22 09:35:14,619 - The confusion matrix is: [[29  0]
+ [ 0  6]]
+2020-03-22 09:35:14,619 - The classification report is:
+2020-03-22 09:35:14,619 -               precision    recall  f1-score   support
+
+         0.0       1.00      1.00      1.00        29
+         1.0       1.00      1.00      1.00         6
+
+    accuracy                           1.00        35
+   macro avg       1.00      1.00      1.00        35
+weighted avg       1.00      1.00      1.00        35
+
+2020-03-22 09:35:14,619 - The parameters chosen are: {'clf__algorithm': 'kd_tree', 'clf__n_neighbors': 2, 'clf__weights': 'distance', 'pca__n_components': 2, 'select__k': 10}
+2020-03-22 09:35:51,669 - Model: <class 'sklearn.svm.classes.SVC'>
+2020-03-22 09:35:51,677 - The confusion matrix is: [[20  9]
+ [ 5  1]]
+2020-03-22 09:35:51,679 - The classification report is:
+2020-03-22 09:35:51,679 -               precision    recall  f1-score   support
+
+         0.0       0.80      0.69      0.74        29
+         1.0       0.10      0.17      0.12         6
+
+    accuracy                           0.60        35
+   macro avg       0.45      0.43      0.43        35
+weighted avg       0.68      0.60      0.64        35
+
+2020-03-22 09:35:51,679 - The parameters chosen are: {'clf__C': 1, 'clf__class_weight': 'balanced', 'clf__gamma': 'scale', 'clf__kernel': 'sigmoid', 'pca__n_components': 5, 'select__k': 10}
+2020-03-22 09:35:51,679 - Model: <class 'sklearn.tree.tree.DecisionTreeClassifier'>
+2020-03-22 09:35:51,680 - The confusion matrix is: [[17 12]
+ [ 0  6]]
+2020-03-22 09:35:51,680 - The classification report is:
+2020-03-22 09:35:51,680 -               precision    recall  f1-score   support
+
+         0.0       1.00      0.59      0.74        29
+         1.0       0.33      1.00      0.50         6
+
+    accuracy                           0.66        35
+   macro avg       0.67      0.79      0.62        35
+weighted avg       0.89      0.66      0.70        35
+
+2020-03-22 09:35:51,680 - The parameters chosen are: {'clf__class_weight': 'balanced', 'clf__criterion': 'entropy', 'clf__max_depth': 2, 'clf__max_features': None, 'clf__min_samples_split': 20, 'pca__n_components': 5, 'select__k': 10}
+2020-03-22 09:35:51,680 - Model: <class 'sklearn.neighbors.classification.KNeighborsClassifier'>
+2020-03-22 09:35:51,680 - The confusion matrix is: [[29  0]
+ [ 0  6]]
+2020-03-22 09:35:51,680 - The classification report is:
+2020-03-22 09:35:51,680 -               precision    recall  f1-score   support
+
+         0.0       1.00      1.00      1.00        29
+         1.0       1.00      1.00      1.00         6
+
+    accuracy                           1.00        35
+   macro avg       1.00      1.00      1.00        35
+weighted avg       1.00      1.00      1.00        35
+
+2020-03-22 09:35:51,680 - The parameters chosen are: {'clf__algorithm': 'kd_tree', 'clf__n_neighbors': 2, 'clf__weights': 'distance', 'pca__n_components': 2, 'select__k': 10}

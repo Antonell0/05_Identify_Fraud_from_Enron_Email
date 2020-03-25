@@ -177,15 +177,16 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import Normalizer
 from sklearn.feature_selection import SelectKBest
+from sklearn.preprocessing import StandardScaler
 import warnings
-
-
 
 features = np.array(features)
 labels = np.array(labels)
 
+#features_train, features_test, labels_train, labels_test = \
+#    train_test_split(features, labels, test_size=0.3)
 # As the labels are very unbalanced StratifiedShuffleSplit was used to separate train and test. Only 1 split was created.
-sss = StratifiedShuffleSplit(n_splits=1, test_size=0.3)
+sss = StratifiedShuffleSplit(n_splits=1000, test_size=0.3)
 
 for train_index, test_index in sss.split(features,labels):
     features_train, features_test = features[train_index], features[test_index]
@@ -232,7 +233,7 @@ with warnings.catch_warnings():
         print('Model: ', Model)
         t0 = time()
         pipe = Pipeline([
-            ('scale', Normalizer()),
+            ('scale', StandardScaler()),
             ('select', SelectKBest()),
             ('clf', Model()),
         ])
@@ -322,7 +323,7 @@ for Model in models_to_test:
     print('Model: ', Model)
     t0 = time()
     pipe = Pipeline([
-        ('scale', Normalizer()),
+        ('scale', StandardScaler()),
         ('select', SelectKBest()),
         ('pca', PCA()),
         ('clf', Model()),
@@ -341,20 +342,20 @@ for Model in models_to_test:
 
 for Model in models_to_test:
 
-    logger.info('Model: ', Model)
-    logger.info('The confusion matrix is:')
-    logger.info(cm[Model])
+    logger.info('Model: {0}'.format(Model))
+    logger.info('The confusion matrix is: {0}'.format(cm[Model]))
     logger.info('The classification report is:')
     logger.info(cr[Model])
-    logger.info('The parameters chosen are:', best_param[Model])
-    print('Model: ', Model)
-    print('The confusion matrix is:')
-    print(cm[Model])
+    logger.info('The parameters chosen are: {0}'.format(best_param[Model]))
 
-    print('The classification report is:')
-    print(cr[Model])
-
-    print('The parameters chosen are:', best_param[Model])
+    # print('Model: ', Model)
+    # print('The confusion matrix is:')
+    # print(cm[Model])
+    #
+    # print('The classification report is:')
+    # print(cr[Model])
+    #
+    # print('The parameters chosen are:', best_param[Model])
 
 
 ### Task 5: Tune your classifier to achieve better than .3 precision and recall
@@ -367,7 +368,7 @@ for Model in models_to_test:
 for best_model in [DecisionTreeClassifier]: #[SVC, DecisionTreeClassifier, KNeighborsClassifier]: #, RandomForestClassifier]:
 
     pipe = Pipeline([
-        ('scale', Normalizer()),
+        ('scale', StandardScaler()),
         ('select', SelectKBest()),
         ('pca', PCA()),
         ('clf', best_model()),
