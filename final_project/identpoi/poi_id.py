@@ -11,22 +11,32 @@ from feature_format import featureFormat, targetFeatureSplit
 from identpoi.tester import dump_classifier_and_data
 import logging
 
-# create logger with 'spam_application'
+# create logger with 'poi_id'
+
 logger = logging.getLogger('poi_id')
-logger.setLevel(logging.DEBUG)
-# create file handler which logs even debug messages
-fh = logging.FileHandler('poi_id.log')
-fh.setLevel(logging.DEBUG)
-# create console handler with a higher log level
-ch = logging.StreamHandler()
-ch.setLevel(logging.ERROR)
-# create formatter and add it to the handlers
-formatter = logging.Formatter('%(asctime)s - %(message)s')
-fh.setFormatter(formatter)
-ch.setFormatter(formatter)
-# add the handlers to the logger
-logger.addHandler(fh)
-logger.addHandler(ch)
+
+LOG_FILENAME = 'poi_id.log'
+logger.basicConfig(filename=LOG_FILENAME, level=logging.DEBUG, filemode='w')
+logger.Formatter('%(asctime)s - %(message)s')
+
+# logging.debug('This message should go to the log file')
+
+#
+#
+# logger = logging.getLogger('poi_id')
+# logger.setLevel(logging.DEBUG)
+# # create file handler which logs even debug messages
+# fh = logging.FileHandler('poi_id.log')
+# fh.setLevel(logging.DEBUG)
+# # create console handler with a higher log level
+# ch = logging.StreamHandler()
+# ch.setLevel(logging.ERROR)
+# # create formatter and add it to the handlers
+# fh.setFormatter(formatter)
+# ch.setFormatter(formatter)
+# # add the handlers to the logger
+# logger.addHandler(fh)
+# logger.addHandler(ch)
 
 logger.info('Start of the script')
 
