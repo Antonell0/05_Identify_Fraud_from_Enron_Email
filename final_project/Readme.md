@@ -4,7 +4,8 @@ Readme
 Project Details
 ---------------
 
-Project Overview
+**Project Overview**
+
 In 2000, Enron was one of the largest companies in the United States. By 2002, it had collapsed into bankruptcy due 
 to widespread corporate fraud. In the resulting Federal investigation, a significant amount of typically confidential 
 information entered into the public record, including tens of thousands of emails and detailed financial data for top 
@@ -13,33 +14,73 @@ made public as a result of the Enron scandal. A dataset containing this data wit
 interest in the fraud case, which means individuals who were indicted, reached a settlement or plea deal with the 
 government, or testified in exchange for prosecution immunity.
 
-Specifications to be fulfilled
+Code
 ------------------------------
 
 **Code functionality**
-- Code reflects the description in the answers to questions in the writeup. i.e. code performs the functions documented 
-in the writeup and the writeup clearly specifies the final analysis strategy.
+The project has been run using Python 3.6. It consists of 2 executables that are contained in the identpoi folder.
+- poi_id.py: it is the main executable for the analysis. It creates the poi_id.log, some figures for the data exploration, 
+and the final dataset and model.
+- tester.py: it is the tester provided with the project adapted to Python 3.6
 
 **Usability**
 - poi_id.py can be run to export the dataset, list of features and algorithm, so that the final algorithm can be 
 checked easily using tester.py
 
-Understanding the Dataset and Question
+Understanding the Dataset
 -------
 
-**Data Exploration (related lesson: "Datasets and Questions")**
-- total number of data points
-- allocation across classes (POI/non-POI)
-- number of features used
-- are there features with many missing values? etc.
+**Data Exploration**
 
-**Outlier Investigation (related lesson: "Outliers")**
-Student response identifies outlier(s) in the financial data, and explains how they are removed or otherwise handled.
+This section will answer to the first questions arising from the data exploration.
+The data are created with the poi_id script and registered in the poi_id.log
+First of all it is important to check the size of the dataset and the number of features.
+The dataset consists of 146 samples. For each sample there are 21 features. The number of POI out of the 146 samples is 18,
+that means that the dataset is imbalanced. 
 
-Optimize Feature Selection/Engineering
+Some of the features have a lot of missing values has can be seen from the below figure:
+ 
+![Missing values](identpoi/missing_values.png)
+
+It has been decided to take out from the analysis the samples missing more than 15 features.
+This means that LOWRY CHARLES P, CHAN RONNIE, WODRASKA JOHN, URQUHART JOHN A, WHALEY DAVID A, MENDELSOHN JOHN, 
+CLINE KENNETH W, WAKEHAM JOHN, WROBEL BRUCE, MEYER JEROME J, GATHMANN WILLIAM D, GILLIS JOHN, LOCKHART EUGENE E,
+PEREIRA PAULO V. FERRAZ, BLAKE JR. NORMAN P, THE TRAVEL AGENCY IN THE PARK, CHRISTODOULOU DIOMEDES, WINOKUR JR. HERBERT S, 
+YEAP SOON, FUGH JOHN L, SCRIMSHAW MATTHEW, SAVAGE FRANK, GRAMM WENDY L will be eliminated from the dataset.
+None of them is a POI. 
+
+**Outlier Investigation**
+
+The next step is to look for the outliers. The first step was to check the maximum and the minimum value for each feature within the
+samples. It was easy to spot that the maximum was always the TOTAL, being the last line of the pdf with the financial data.
+TOTAL has been removed from the dataset.
+
+The following plot have been created to see whether there was an easy correlation between the financial figures or the emails
+sent or received from a POI and being a POI.
+
+![salary_vs_bonus](identpoi/salary_bonus_poi_scatter.png)
+![salary vs total stock value](identpoi/salary_total_stock_value_poi_scatter.png)
+![to_poi vs from poi](identpoi/from_this_person_to_poi_from_poi_to_this_person_poi_scatter.png)
+
+The images show that there is no an easy correlation and some of the extremes are actually POIs. This means that we will need
+to use some machine learning algorithms to find hyper-dimensional correlations.
+
+
+Feature Engineering
 --------
 
-**Create new features (related lesson: "Feature Selection")**
+**New features**
+
+Looking at the last figure of the previous section it is impossible to see a clear trend between the mails sent or received from POIs and
+being a POI. This statistics could be polluted by the number of the emails sent or received.
+In example sending 10 mails out of 15 to a POI, should count more than sending 20 out of 200. 
+
+For this reason 3 new features have been created and added to the dataset:
+- the ratio between the emails sent to a POI and the emails sent
+- the ratio between the emails sent to a POI and the emails sent
+- 
+![to_poi_ratio vs from poi_ratio](identpoi/ratio_from_POI_ratio_to_POI_poi_scatter.png)
+
 At least one new feature is implemented. Justification for that feature is provided in the written response. The effect 
 of that feature on final algorithm performance is tested or its strength is compared to other features in feature 
 selection. The student is not required to include their new feature in their final feature set.
@@ -83,7 +124,6 @@ through the use of cross validation, noting the specific type of validation perf
 
 **Algorithm Performance**
 When tester.py is used to evaluate performance, precision and recall are both at least 0.3.
-
 
 
 Questions
