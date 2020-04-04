@@ -76,70 +76,75 @@ being a POI. This statistics could be polluted by the number of the emails sent 
 In example sending 10 mails out of 15 to a POI, should count more than sending 20 out of 200. 
 
 For this reason 3 new features have been created and added to the dataset:
-- the ratio between the emails sent to a POI and the emails sent
-- the ratio between the emails sent to a POI and the emails sent
-- 
+- interaction_POI: the ratio between the emails sent to or received from a POI and the emails sent and received
+- ratio_from_POI: the ratio between the emails received from a POI and the emails received
+- ratio_to_POI: the ratio between the emails sent to a POI and the emails sent
+
+The plot when using the ratio is shown below. It is possible to observe a slight improvement on the data.
 ![to_poi_ratio vs from poi_ratio](identpoi/ratio_from_POI_ratio_to_POI_poi_scatter.png)
 
-At least one new feature is implemented. Justification for that feature is provided in the written response. The effect 
-of that feature on final algorithm performance is tested or its strength is compared to other features in feature 
-selection. The student is not required to include their new feature in their final feature set.
+It was decided to carry on with all the features and to use the PCA in order to diminish the size of the problem.
 
-**Intelligently select features (related lesson: "Feature Selection")**
-Univariate or recursive feature selection is deployed, or features are selected by hand (different combinations of 
-features are attempted, and the performance is documented for each one). Features that are selected are reported and 
-the number of features selected is justified. For an algorithm that supports getting the feature importances 
-(e.g. decision tree) or feature scores (e.g. SelectKBest), those are documented as well.
-
-**Properly scale features (related lesson: "Feature Scaling")**
-If algorithm calls for scaled features, feature scaling is deployed.
-
-Pick and Tune an Algorithm
+Machine Learning Algorithm
 --------------
 
-**Pick an algorithm (related lessons: "Naive Bayes" through "Choose Your Own Algorithm")**
-Response addresses what it means to perform parameter tuning and why it is important.
+Steps of the Model
 
-**Discuss parameter tuning and its importance.**
-At least one important parameter tuned with at least 3 settings investigated systematically, or any of the following
- are true:
+For the model creation 3 steps have been considered:
+- Feature scaling: standardization of a dataset is a common requirement for many machine learning estimators: they might behave badly if 
+the individual features do not more or less look like standard normally distributed data 
+(e.g. Gaussian with 0 mean and unit variance). This is the case for the ENRON dataset, hence the first stop of our 
+algorithm has to be a scaling of the features. It was decided to use the StandardScaler.
+- Principal component analysis (PCA): As explained in the previous section it was decided not to reduce the features 
+used for the model. A PCA on all the features was performed instead in order to reduce the size of the model losing as
+little information as possible.
+- Classifier: As requested 3 classifier have been tried. SVM, Decision Tree and KNeighborsClassifier.
+ 
+To concatenate the 3 steps a pipeline has been used and the parameter exploration has been performed with GridSearchCV.
 
-- GridSearchCV used for parameter tuning
-- Several parameters tuned
-- Parameter tuning incorporated into algorithm selection (i.e. parameters tuned for more than one algorithm, and best
- algorithm-tune combination selected for final analysis).
+The considered parameter space is:
+```python
+param_space = {
+    SVC: [
+        {
+            'pca__n_components': [5, 10, 12],
+            'clf__kernel': ['sigmoid', 'rbf'],
+            'clf__C': [1, 10, 100, 1000],
+            'clf__gamma': ['scale'],
+        }
+    ],
+    DecisionTreeClassifier: [
+        {
+            'pca__n_components': [5, 10, 12],
+            'clf__criterion': ['gini', 'entropy'],
+            'clf__min_samples_split': [2, 4, 6, 8],
+            'clf__max_depth': [2, 5, None],
+        }
+    ],
+    KNeighborsClassifier: [
+        {
+            'pca__n_components': [5, 10, 12],
+            'clf__n_neighbors': [2, 3, 5, 8],
+            'clf__weights': ['distance', 'uniform'],
+            'clf__algorithm': ['kd_tree', 'ball_tree', 'auto']
+        }
+    ],
+}
+```
+
+The samples have been separated in the train (80% of the samples) and the test (20% of the samples) sets. The test set
+ has not been used at all in the training of the model. In order to avoid overfitting as much as possible the 
+ cross-validation has been used amongst the GridSearchCV parameters.
 
 Validate and Evaluate
 -------
-**Usage of Evaluation Metrics (related lesson: "Evaluation Metrics")**
-At least two appropriate metrics are used to evaluate algorithm performance (e.g. precision and recall), and the 
-student articulates what those metrics measure in context of the project task.
 
-**Discuss validation and its importance.**
-Response addresses what validation is and why it is important.
+The different classifiers have been evaluated in terms of accuracy and recall, and the one having the best score with
+the parameters used was the SVM.
 
-**Validation Strategy (related lesson "Validation")**
-Performance of the final algorithm selected is assessed by splitting the data into training and testing sets or 
-through the use of cross validation, noting the specific type of validation performed.
+The complete pipeline has been saved and passed alog the dataset and the feature list to the tester.
+The results obtained with the tester are:
 
-**Algorithm Performance**
-When tester.py is used to evaluate performance, precision and recall are both at least 0.3.
-
-
-Questions
----------
-
-
-Summarize the goal of this project and how machine learning is useful in trying to accomplish it. As part of your answer, give some background on the dataset and how it can be used to answer the project question. Were there any outliers in the data when you got it, and how did you handle those?  [relevant rubric items: “data exploration”, “outlier investigation”]
-
-What features did you end up using in your POI identifier, and what selection process did you use to pick them? Did you have to do any scaling? Why or why not? As part of the assignment, you should attempt to engineer your own feature that does not come ready-made in the dataset -- explain what feature you tried to make, and the rationale behind it. (You do not necessarily have to use it in the final analysis, only engineer and test it.) In your feature selection step, if you used an algorithm like a decision tree, please also give the feature importances of the features that you use, and if you used an automated feature selection function like SelectKBest, please report the feature scores and reasons for your choice of parameter values.  [relevant rubric items: “create new features”, “intelligently select features”, “properly scale features”]
-
-What algorithm did you end up using? What other one(s) did you try? How did model performance differ between algorithms?  [relevant rubric item: “pick an algorithm”]
-
-What does it mean to tune the parameters of an algorithm, and what can happen if you don’t do this well?  How did you tune the parameters of your particular algorithm? What parameters did you tune? (Some algorithms do not have parameters that you need to tune -- if this is the case for the one you picked, identify and briefly explain how you would have done it for the model that was not your final choice or a different model that does utilize parameter tuning, e.g. a decision tree classifier).  [relevant rubric items: “discuss parameter tuning”, “tune the algorithm”]
-
-What is validation, and what’s a classic mistake you can make if you do it wrong? How did you validate your analysis?  [relevant rubric items: “discuss validation”, “validation strategy”]
-
-Give at least 2 evaluation metrics and your average performance for each of them.  Explain an interpretation of your metrics that says something human-understandable about your algorithm’s performance. [relevant rubric item: “usage of evaluation metrics”]
-
+	Accuracy: 0.81177	Precision: 0.38941	Recall: 0.39350	F1: 0.39144	F2: 0.39268
+	Total predictions: 13000	True positives:  787	False positives: 1234	False negatives: 1213	True negatives: 9766
 

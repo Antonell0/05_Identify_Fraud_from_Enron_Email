@@ -253,15 +253,6 @@ param_space = {
             'clf__algorithm': ['kd_tree', 'ball_tree', 'auto']
         }
     ],
-    RandomForestClassifier: [
-        {
-            'pca__n_components': [5, 10, 12],
-            'clf__criterion': ['gini', 'entropy'],
-            'clf__min_samples_split': [2, 3, 5, 8],
-            'clf__max_depth': [2, 5, None],
-            'clf__n_estimators': [5, 10, 15]
-        }
-    ],
 }
 
 # Models testing
@@ -316,16 +307,15 @@ for best_model in [
         ('clf', best_model()),
     ])
     clf = pipe_best.set_params(**best_param[best_model])
-    print(clf)
+
     clf.fit(features_train, labels_train)
 
     labels_pred = clf.predict(features_test)
 
-    print('The confusion matrix is:')
-    print(confusion_matrix(labels_test, labels_pred))
-
-    print('The classification report is:')
-    print(classification_report(labels_test, labels_pred))
+    logger.info('Model: {0}'.format(Model))
+    logger.info('The confusion matrix is: {0}'.format(confusion_matrix(labels_test, labels_pred)))
+    logger.info('The classification report is:')
+    logger.info(classification_report(labels_test, labels_pred))
 
 ### Task 6: Dump your classifier, dataset, and features_list so anyone can
 ### check your results. You do not need to change anything below, but make sure
